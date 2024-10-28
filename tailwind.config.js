@@ -17,4 +17,4 @@ const config = withMT({
   plugins: [],
 });
 
-module.exports = withMT(config);
+module.exports = config;

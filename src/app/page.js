@@ -1,9 +1,9 @@
-import { Button } from "./MTWrapper";
+import HomeHeroSection from "./(routes)/home/page";
 
 export default function Home() {
   return (
     <div>
-      <Button>Hello</Button>
+      <HomeHeroSection />
     </div>
   );
 }
