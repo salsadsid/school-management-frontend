@@ -1,100 +1,86 @@
 "use client";
-import { useState } from "react";
-
-import { Button, Input, Typography } from "@material-tailwind/react";
+import { Button } from "@/components/ui/button";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import { HiEye, HiEyeSlash } from "react-icons/hi2";
+import { useForm } from "react-hook-form";
 
 export function Login() {
-  const [passwordShown, setPasswordShown] = useState(false);
-  const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
-
+  const form = useForm();
+  const onSubmit = () => {};
   return (
     <section className="grid text-center h-screen items-center p-8">
-      <div>
-        <Typography variant="h3" color="blue-gray" className="mb-2">
-          Sign In
-        </Typography>
-        <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-          Enter your email and password to sign in
-        </Typography>
-        <form action="#" className="mx-auto max-w-[24rem] text-left">
-          <div className="mb-6">
-            <label htmlFor="email">
-              <Typography
-                variant="small"
-                className="mb-2 block font-medium text-gray-900"
-              >
-                Your Email
-              </Typography>
-            </label>
-            <Input
-              id="email"
-              color="gray"
-              size="lg"
-              type="email"
-              name="email"
-              placeholder="name@mail.com"
-              className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
-              labelProps={{
-                className: "hidden",
-              }}
-            />
-          </div>
-          <div className="mb-6">
-            <label htmlFor="password">
-              <Typography
-                variant="small"
-                className="mb-2 block font-medium text-gray-900"
-              >
-                Password
-              </Typography>
-            </label>
-            <Input
-              size="lg"
-              placeholder="********"
-              labelProps={{
-                className: "hidden",
-              }}
-              className="w-full placeholder:opacity-100 focus:border-t-primary border-t-blue-gray-200"
-              type={passwordShown ? "text" : "password"}
-              icon={
-                <i onClick={togglePasswordVisiblity}>
-                  {passwordShown ? (
-                    <HiEye className="h-5 w-5" />
-                  ) : (
-                    <HiEyeSlash className="h-5 w-5" />
-                  )}
-                </i>
-              }
-            />
-          </div>
-          <Button color="gray" size="lg" className="mt-6" fullWidth>
-            sign in
-          </Button>
-          <div className="!mt-4 flex justify-end">
-            <Typography
-              as="a"
-              href="#"
-              color="blue-gray"
-              variant="small"
-              className="font-medium"
-            >
-              Forgot password
-            </Typography>
-          </div>
+      <div className="w-full rounded-lg bg-white shadow dark:border dark:border-gray-700 dark:bg-gray-800 sm:max-w-md md:mt-0 xl:p-0">
+        <div className="space-y-4 p-6 sm:p-8 md:space-y-6">
+          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 dark:text-white md:text-2xl">
+            Login to your account
+          </h1>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Email <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>
+                      Password <span className="text-red-500">*</span>
+                    </FormLabel>
+                    <FormControl>
+                      <Input type="password" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              {/* {showErrMsg && (
+                <p className="font-medium text-red-500">
+                  Email or password is incorrect.
+                </p>
+              )} */}
 
-          <Typography
-            variant="small"
-            color="gray"
-            className="!mt-4 text-center font-normal"
+              <Button type="submit" className="text-white">
+                Login
+              </Button>
+            </form>
+          </Form>
+          <Link
+            href="/forget-passward"
+            className="dark:text-primary-500 block text-blue-600 hover:underline"
           >
-            Not registered?{" "}
-            <Link href="signup" className="font-medium text-gray-900">
-              Create account
+            Forget Password?
+          </Link>
+          <p className="text-md font-semibold text-gray-700 dark:text-gray-400">
+            Don’t have an account yet?{" "}
+            <Link
+              href="/signup"
+              className="dark:text-primary-500 font-bold text-blue-600 hover:underline"
+            >
+              Sign up
             </Link>
-          </Typography>
-        </form>
+          </p>
+        </div>
       </div>
     </section>
   );
