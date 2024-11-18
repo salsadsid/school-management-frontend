@@ -1,52 +1,49 @@
 import { useState } from "react";
 
-import { Button, Input, Typography } from "@material-tailwind/react";
+import {
+  Button,
+  Input,
+  Option,
+  Select,
+  Typography,
+} from "@material-tailwind/react";
+import { Controller } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import useLoginFormHook from "./useLoginFormHook";
-
-const LoginForm = ({ isTeacher }) => {
+import useSignUpFormHook from "./useSignUpFormHook";
+import { roles } from "./utils";
+const SignUpForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
-  const { renderLoginFormHookProps } = useLoginFormHook({ isTeacher });
+  const { renderSignUpFormHookProps } = useSignUpFormHook();
 
   const {
     handleSubmit,
     register,
     formState: { errors },
-  } = renderLoginFormHookProps;
+  } = renderSignUpFormHookProps;
 
   const submitHandler = (data) => {
     console.log(data);
   };
-
   return (
     <div>
       <Typography variant="h3" color="blue-gray" className="mb-2">
-        Log in
+        Sign Up
       </Typography>
       <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-        Enter your {isTeacher ? "email" : "Student ID"} and password
+        Enter your email and password
       </Typography>
-
       <form
         className="mx-auto max-w-[24rem] text-left"
         onSubmit={handleSubmit(submitHandler)}
       >
-        {isTeacher ? (
-          <div className="mb-6">
-            <Input label="Email" {...register("email")} />
-            {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
-            )}
-          </div>
-        ) : (
-          <div className="mb-6">
-            <Input label="Student ID" {...register("studentId")} />
-            {errors.studentId && (
-              <span className="text-red-500">{errors.studentId.message}</span>
-            )}
-          </div>
-        )}
+        <div className="mb-6">
+          <Input label="Email" {...register("email")} />
+          {errors.email && (
+            <span className="text-red-500">{errors.email.message}</span>
+          )}
+        </div>
+
         <div className="mb-6">
           <Input
             size="lg"
@@ -68,6 +65,26 @@ const LoginForm = ({ isTeacher }) => {
             <span className="text-red-500">{errors.password.message}</span>
           )}
         </div>
+        <Controller
+          name="role"
+          control={renderSignUpFormHookProps.control}
+          render={({ field: { onChange, value } }) => (
+            <Select
+              label="Role"
+              className="mb-6"
+              variant="outlined"
+              value={value}
+              onChange={onChange}
+            >
+              {roles.map((role) => (
+                <Option key={role.name} value={role.name}>
+                  {role.label}
+                </Option>
+              ))}
+            </Select>
+          )}
+        ></Controller>
+
         <Button size="lg" className="mt-6" fullWidth type="submit">
           sign in
         </Button>
@@ -98,4 +115,4 @@ const LoginForm = ({ isTeacher }) => {
   );
 };
 
-export default LoginForm;
+export default SignUpForm;

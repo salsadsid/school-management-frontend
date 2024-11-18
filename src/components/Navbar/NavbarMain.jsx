@@ -59,6 +59,11 @@ export function NavbarMain() {
             Login
           </Button>
         </Link>
+        <Link to="/signup">
+          <Button color="gray" className="hidden lg:inline-block">
+            Sign Up
+          </Button>
+        </Link>
         <IconButton
           size="sm"
           variant="text"
