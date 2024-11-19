@@ -23,7 +23,7 @@ export function Login() {
   return (
     <section className="grid text-center h-screen items-center p-8">
       <Tabs
-        value="student"
+        value="teacher"
         className="md:min-w-[420px] md:max-w-md w-full mx-auto"
       >
         <TabsHeader>

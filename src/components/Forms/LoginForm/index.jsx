@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../../redux/api/authApi";
 import useLoginFormHook from "./useLoginFormHook";
 
@@ -10,7 +11,7 @@ const LoginForm = ({ isTeacher }) => {
   const [loginUser] = useLoginUserMutation();
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderLoginFormHookProps } = useLoginFormHook({ isTeacher });
-
+  const navigate = useNavigate();
   const {
     handleSubmit,
     register,
@@ -21,6 +22,7 @@ const LoginForm = ({ isTeacher }) => {
     try {
       const res = await loginUser(data);
       console.log(res);
+      navigate("/dashboard");
     } catch (err) {
       console.log(err);
     }

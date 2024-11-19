@@ -54,12 +54,12 @@ export function NavbarMain() {
         <div className="hidden lg:block">
           <NavList />
         </div>
-        <Link to="/login">
+        <Link to="auth/sign-in">
           <Button color="gray" className="hidden lg:inline-block">
             Login
           </Button>
         </Link>
-        <Link to="/signup">
+        <Link to="auth/sign-up">
           <Button color="gray" className="hidden lg:inline-block">
             Sign Up
           </Button>

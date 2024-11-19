@@ -12,6 +12,6 @@ export const reducers = combineReducers({
 
 export const persistConfig = {
   key: PERSIST_CONFIG_KEY,
-  whitelist: [],
+  whitelist: ["auth"],
   storage,
 };

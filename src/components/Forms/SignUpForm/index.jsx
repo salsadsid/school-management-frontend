@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import {
   Button,
   Input,
@@ -7,36 +5,43 @@ import {
   Select,
   Typography,
 } from "@material-tailwind/react";
+import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { useRegisterUserMutation } from "../../../redux/api/authApi";
 import useSignUpFormHook from "./useSignUpFormHook";
 import { roles } from "./utils";
 const SignUpForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderSignUpFormHookProps } = useSignUpFormHook();
-
+  const [registerUser] = useRegisterUserMutation();
   const {
     handleSubmit,
     register,
     formState: { errors },
   } = renderSignUpFormHookProps;
 
-  const submitHandler = (data) => {
-    console.log(data);
+  const submitHandler = async (data) => {
+    try {
+      const res = await registerUser(data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
-    <div>
-      <Typography variant="h3" color="blue-gray" className="mb-2">
-        Sign Up
-      </Typography>
-      <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-        Enter your email and password
-      </Typography>
+    <div className="w-full">
       <form
-        className="mx-auto max-w-[24rem] text-left"
+        className="mx-auto max-w-xl text-left"
         onSubmit={handleSubmit(submitHandler)}
       >
+        <Typography variant="h3" color="blue-gray" className="mb-2">
+          Sign Up
+        </Typography>
+        <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
+          Enter your email and password
+        </Typography>
         <div className="mb-6">
           <Input label="Email" {...register("email")} />
           {errors.email && (

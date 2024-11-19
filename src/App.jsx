@@ -1,11 +1,24 @@
-import "./App.css";
-import NavbarMain from "./components/Navbar/NavbarMain";
-
+import { Auth, Dashboard } from "@/layouts";
+import { Route, Routes } from "react-router-dom";
+import MainLayout from "./layout/MainLayout/MainLayout";
+import Home from "./pages/Home";
+import AuthRequired from "./router/AuthRequired";
 function App() {
   return (
-    <main>
-      <NavbarMain />
-    </main>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route index element={<Home />} />
+        <Route path="/auth/*" element={<Auth />} />
+      </Route>
+      <Route
+        path="/dashboard/*"
+        element={
+          <AuthRequired>
+            <Dashboard />
+          </AuthRequired>
+        }
+      />
+    </Routes>
   );
 }
 
