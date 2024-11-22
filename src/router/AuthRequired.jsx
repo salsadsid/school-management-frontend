@@ -7,16 +7,24 @@ const AuthRequired = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user_info) {
+    // If the user_info is available, we're done loading.
+    if (user_info !== undefined) {
       setLoading(false);
     }
   }, [user_info]);
 
+  // If still loading, show loading state
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  return user_info ? children : <Navigate to="/login" />;
+  // If there's no user_info, redirect to login
+  if (!user_info) {
+    return <Navigate to="/auth/sign-in" />;
+  }
+
+  // If user_info exists, render children
+  return children;
 };
 
 export default AuthRequired;

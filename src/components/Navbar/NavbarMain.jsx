@@ -7,7 +7,9 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { FaBars, FaXmark } from "react-icons/fa6";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../../redux/slices/authSlice";
 
 function NavItem({ label, to }) {
   return (
@@ -22,7 +24,9 @@ function NavItem({ label, to }) {
 function NavList() {
   return (
     <ul className="mb-4 mt-2 flex flex-col gap-3 lg:mb-0 lg:mt-0 lg:flex-row lg:items-center lg:gap-8">
-      <NavItem label="About Us" />
+      <Link to="/dashboard">
+        <NavItem label="About Us" />
+      </Link>
       <NavItem label="Pricing" />
       <NavItem label="Contact Us" />
     </ul>
@@ -31,6 +35,7 @@ function NavList() {
 
 export function NavbarMain() {
   const [open, setOpen] = React.useState(false);
+  const dispatch = useDispatch();
   const handleOpen = () => setOpen((cur) => !cur);
 
   React.useEffect(() => {
@@ -52,7 +57,11 @@ export function NavbarMain() {
           </Typography>
         </Link>
         <div className="hidden lg:block">
-          <NavList />
+          <Link to="/dashboard">
+            <Typography color="blue-gray" className="mr-4 cursor-pointer">
+              Dashboard
+            </Typography>
+          </Link>
         </div>
         <Link to="auth/sign-in">
           <Button color="gray" className="hidden lg:inline-block">
@@ -64,6 +73,15 @@ export function NavbarMain() {
             Sign Up
           </Button>
         </Link>
+
+        <Button
+          color="gray"
+          onClick={() => dispatch(logout())}
+          className="hidden lg:inline-block"
+        >
+          Log out
+        </Button>
+
         <IconButton
           size="sm"
           variant="text"
