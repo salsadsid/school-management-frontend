@@ -23,7 +23,7 @@ export const Classes = () => {
               {item.description ? item.description : "No description"}
             </Typography>
             <Typography>
-              Class teacher: {item.teacher ? item.teacher.name : "No teacher"}
+              Class teacher: {item.teacher ? item.teacher.email : "No teacher"}
             </Typography>
           </CardBody>
           <CardFooter className="pt-0">

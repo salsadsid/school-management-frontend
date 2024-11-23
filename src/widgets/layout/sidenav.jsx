@@ -5,7 +5,6 @@ import {
   InboxIcon,
   PowerIcon,
   PresentationChartBarIcon,
-  ShoppingBagIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
 import {
@@ -91,119 +90,51 @@ export function Sidenav({ brandImg, brandName, routes }) {
               </AccordionHeader>
             </ListItem>
             <AccordionBody className="py-1">
-              {routes.map(({ layout, title, pages }, key) => (
-                <ul key={key} className="mb-4 flex flex-col gap-1">
-                  {title && (
-                    <li className="mx-3.5 mt-4 mb-2">
-                      <Typography
-                        variant="small"
-                        color={sidenavType === "dark" ? "white" : "blue-gray"}
-                        className="font-black uppercase opacity-75"
-                      >
-                        {title}
-                      </Typography>
-                    </li>
-                  )}
-                  {pages.map(({ icon, name, path }) => (
-                    <li key={name}>
-                      <NavLink to={`/${layout}${path}`}>
-                        {({ isActive }) => (
-                          <Button
-                            variant={isActive ? "gradient" : "text"}
-                            color={
-                              isActive
-                                ? sidenavColor
-                                : sidenavType === "dark"
-                                ? "white"
-                                : "blue-gray"
-                            }
-                            className="flex items-center gap-4 px-4 capitalize"
-                            fullWidth
-                          >
-                            {icon}
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
+              {routes
+                .filter(({ layout }) => layout === "dashboard")
+                .map(({ layout, title, pages }, key) => (
+                  <ul key={key} className="mb-4 flex flex-col gap-1">
+                    {title && (
+                      <li className="mx-3.5 mt-4 mb-2">
+                        <Typography
+                          variant="small"
+                          color={sidenavType === "dark" ? "white" : "blue-gray"}
+                          className="font-black uppercase opacity-75"
+                        >
+                          {title}
+                        </Typography>
+                      </li>
+                    )}
+                    {pages.map(({ icon, name, path }) => (
+                      <li key={name}>
+                        <NavLink to={`/${layout}${path}`}>
+                          {({ isActive }) => (
+                            <Button
+                              variant={isActive ? "gradient" : "text"}
+                              color={
+                                isActive
+                                  ? sidenavColor
+                                  : sidenavType === "dark"
+                                  ? "white"
+                                  : "blue-gray"
+                              }
+                              className="flex items-center gap-4 px-4 capitalize"
+                              fullWidth
                             >
-                              {name}
-                            </Typography>
-                          </Button>
-                        )}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              ))}
-            </AccordionBody>
-          </Accordion>
-          <Accordion
-            open={open === 2}
-            icon={
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 transition-transform ${
-                  open === 2 ? "rotate-180" : ""
-                }`}
-              />
-            }
-          >
-            <ListItem className="p-0" selected={open === 2}>
-              <AccordionHeader
-                onClick={() => handleOpen(2)}
-                className="border-b-0 p-3"
-              >
-                <ListItemPrefix>
-                  <ShoppingBagIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-normal">
-                  Classes
-                </Typography>
-              </AccordionHeader>
-            </ListItem>
-            <AccordionBody className="py-1">
-              {routes.map(({ layout, title, pages }, key) => (
-                <ul key={key} className="mb-4 flex flex-col gap-1">
-                  {title && (
-                    <li className="mx-3.5 mt-4 mb-2">
-                      <Typography
-                        variant="small"
-                        color={sidenavType === "dark" ? "white" : "blue-gray"}
-                        className="font-black uppercase opacity-75"
-                      >
-                        {title}
-                      </Typography>
-                    </li>
-                  )}
-                  {pages.map(({ icon, name, path }) => (
-                    <li key={name}>
-                      <NavLink to={`/${layout}${path}`}>
-                        {({ isActive }) => (
-                          <Button
-                            variant={isActive ? "gradient" : "text"}
-                            color={
-                              isActive
-                                ? sidenavColor
-                                : sidenavType === "dark"
-                                ? "white"
-                                : "blue-gray"
-                            }
-                            className="flex items-center gap-4 px-4 capitalize"
-                            fullWidth
-                          >
-                            {icon}
-                            <Typography
-                              color="inherit"
-                              className="font-medium capitalize"
-                            >
-                              {name}
-                            </Typography>
-                          </Button>
-                        )}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              ))}
+                              {icon}
+                              <Typography
+                                color="inherit"
+                                className="font-medium capitalize"
+                              >
+                                {name}
+                              </Typography>
+                            </Button>
+                          )}
+                        </NavLink>
+                      </li>
+                    ))}
+                  </ul>
+                ))}
             </AccordionBody>
           </Accordion>
           <hr className="my-2 border-blue-gray-50" />
