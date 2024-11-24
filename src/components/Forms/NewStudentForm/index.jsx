@@ -8,21 +8,21 @@ import {
 import React from "react";
 import { Controller } from "react-hook-form";
 import { useGetClassesQuery } from "../../../redux/api/classApi";
+import { useCreateStudentMutation } from "../../../redux/api/studentApi";
 import useNewStudentForm from "./useNewClassForm";
 
 const NewStudentForm = () => {
   const { renderNewStudentFormHookProps } = useNewStudentForm();
-
+  const [createStudent] = useCreateStudentMutation();
   const { register, handleSubmit, control, errors } =
     renderNewStudentFormHookProps;
   const { data: classes, isLoading: isClassesLoading } = useGetClassesQuery();
 
-  const submitHandler = (data) => {
+  const submitHandler = async (data) => {
     console.log(data);
     try {
-      // const res = createClass(data);
-      // console.log(res);
-      console.log(data);
+      const res = await createStudent(data);
+      console.log(res);
     } catch (err) {
       console.log(err);
     }
@@ -47,7 +47,7 @@ const NewStudentForm = () => {
         </div>
         <div className="mb-6">
           <div className="mb-6">
-            <Input label="Roll" {...register("roll")} />
+            <Input label="Student ID" {...register("studentId")} />
             {errors?.roll && (
               <span className="text-red-500">{errors.roll.message}</span>
             )}

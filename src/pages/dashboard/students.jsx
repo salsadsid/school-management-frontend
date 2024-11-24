@@ -6,10 +6,10 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import React from "react";
-import { useGetClassesQuery } from "../../redux/api/classApi";
+import { useGetAllStudentsQuery } from "../../redux/api/studentApi";
 
-export const Classes = () => {
-  const { data } = useGetClassesQuery();
+export const Students = () => {
+  const { data } = useGetAllStudentsQuery();
   console.log(data);
   return (
     <div>
@@ -19,20 +19,15 @@ export const Classes = () => {
             <Typography variant="h5" color="blue-gray" className="mb-2">
               {item.name}
             </Typography>
-            <Typography>
-              {item.description ? item.description : "No description"}
+            <Typography variant="p" color="blue-gray" className="mb-2">
+              ID: {item.studentId}
             </Typography>
             <Typography>
-              Class teacher: {item.teacher ? item.teacher.email : "No teacher"}
+              Class: {item.class ? item.class.name : "No class"}
             </Typography>
-            {item?.students?.length > 0 && (
-              <div>
-                <Typography>Students:</Typography>
-                {item?.students.map((student) => (
-                  <Typography key={student._id}>{student.name}</Typography>
-                ))}
-              </div>
-            )}
+            <Typography>
+              Password : {item.password ? item.password : "No password"}
+            </Typography>
           </CardBody>
           <CardFooter className="pt-0">
             <Button>Read More</Button>
@@ -43,4 +38,4 @@ export const Classes = () => {
   );
 };
 
-export default Classes;
+export default Students;

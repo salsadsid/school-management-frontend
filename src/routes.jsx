@@ -8,7 +8,7 @@ import {
 // import NewClass from "./pages/dashboard/newclass";
 
 import { SignIn, SignUp } from "@/pages/auth";
-import { Classes, NewClass, NewStudent } from "@/pages/dashboard";
+import { Classes, NewClass, NewStudent, Students } from "@/pages/dashboard";
 
 // import NewStudent from "./pages/dashboard/newStudent";
 
@@ -32,6 +32,12 @@ export const routes = [
         name: "New Class",
         path: "/classes-new",
         element: <NewClass />,
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "All Students",
+        path: "/students",
+        element: <Students />,
       },
       {
         icon: <UserCircleIcon {...icon} />,
