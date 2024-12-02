@@ -1,8 +1,8 @@
-import { Auth, Dashboard } from "@/layouts";
+import { Auth, Dashboard, MainLayout } from "@/layouts";
+import { Home } from "@/pages/home";
 import { Route, Routes } from "react-router-dom";
-import MainLayout from "./layout/MainLayout/MainLayout";
-import Home from "./pages/Home";
-import AuthRequired from "./router/AuthRequired";
+import AuthRequired from "./helpers/AuthRequired";
+
 function App() {
   return (
     <Routes>

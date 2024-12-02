@@ -1,16 +1,12 @@
+import { SignIn, SignUp } from "@/pages/auth";
+import { Classes, NewClass, NewStudent, Students } from "@/pages/dashboard";
+import { Home } from "@/pages/home";
 import {
   HomeIcon,
   RectangleStackIcon,
   ServerStackIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-// import Classes from "./pages/dashboard/classes";
-// import NewClass from "./pages/dashboard/newclass";
-
-import { SignIn, SignUp } from "@/pages/auth";
-import { Classes, NewClass, NewStudent, Students } from "@/pages/dashboard";
-
-// import NewStudent from "./pages/dashboard/newStudent";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -19,6 +15,20 @@ const icon = {
 export const routes = [
   {
     layout: "dashboard",
+    pages: [
+      {
+        icon: <HomeIcon {...icon} />,
+        name: "Dashboard",
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+
+  {
+    layout: "dashboard",
+    title: "Classes",
+    isAccordion: true,
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -33,6 +43,13 @@ export const routes = [
         path: "/classes-new",
         element: <NewClass />,
       },
+    ],
+  },
+  {
+    layout: "dashboard",
+    title: "Students",
+    isAccordion: true,
+    pages: [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "All Students",
