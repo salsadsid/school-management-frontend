@@ -4,11 +4,13 @@ import { Button, Input, Typography } from "@material-tailwind/react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../../redux/api/authApi";
+import { useLoginStudentMutation } from "../../../redux/api/studentApi";
 import useLoginFormHook from "./useLoginFormHook";
 
 const LoginForm = ({ isTeacher }) => {
   const [passwordShown, setPasswordShown] = useState(false);
   const [loginUser] = useLoginUserMutation();
+  const [loginStudent] = useLoginStudentMutation();
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderLoginFormHookProps } = useLoginFormHook({ isTeacher });
   const navigate = useNavigate();
@@ -20,8 +22,13 @@ const LoginForm = ({ isTeacher }) => {
 
   const submitHandler = async (data) => {
     try {
-      const res = await loginUser(data);
-      console.log(res);
+      if (isTeacher) {
+        const res = await loginUser(data).unwrap();
+        console.log(res, "Teacher");
+      } else {
+        const res = await loginStudent(data).unwrap();
+        console.log(res, "Student");
+      }
       navigate("/dashboard");
     } catch (err) {
       console.log(err);
