@@ -6,6 +6,7 @@ import {
   TabsHeader,
 } from "@material-tailwind/react";
 import LoginForm from "../../components/Forms/LoginForm";
+import { loginPageImage } from "../../configs/systemConfiguration";
 
 const data = [
   {
@@ -21,8 +22,8 @@ const data = [
 ];
 export function SignIn() {
   return (
-    <section className="m-8 flex gap-4">
-      <div className="w-full lg:w-3/5 mt-24">
+    <section className="m-8 flex items-center gap-4">
+      <div className="w-full lg:w-3/5 mt-12">
         <Tabs
           value="teacher"
           className="md:min-w-[420px] md:max-w-md w-full mx-auto"
@@ -45,7 +46,8 @@ export function SignIn() {
       </div>
       <div className="w-2/5 h-full hidden lg:block">
         <img
-          src="/img/pattern.png"
+          src={loginPageImage.src}
+          alt={loginPageImage.alt}
           className="h-full w-full object-cover rounded-3xl"
         />
       </div>

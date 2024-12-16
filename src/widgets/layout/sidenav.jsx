@@ -15,6 +15,7 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { isSystem, schoolName } from "../../configs/systemConfiguration";
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
@@ -46,13 +47,13 @@ export function Sidenav({ brandImg, brandName, routes }) {
         </Link>
         <IconButton
           variant="text"
-          color="white"
+          // color="white"
           size="sm"
           ripple={false}
           className="absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
           onClick={() => setOpenSidenav(dispatch, false)}
         >
-          <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-white" />
+          <XMarkIcon strokeWidth={2.5} className="h-5 w-5 " />
         </IconButton>
       </div>
       <div className="m-4">
@@ -171,7 +172,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: "Material Tailwind React",
+  brandName: isSystem ? "School Management" : schoolName,
 };
 
 Sidenav.propTypes = {

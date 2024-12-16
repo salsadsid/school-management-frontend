@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 
 export function Auth() {
   return (
-    <div className="relative min-h-screen w-full">
+    <div className="relative">
       <Routes>
         {routes.map(
           ({ layout, pages }) =>

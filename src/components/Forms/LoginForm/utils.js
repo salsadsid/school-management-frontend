@@ -1,5 +1,5 @@
 export const initialStudentLoginFormValues = {
-  studentId: "sas",
+  studentId: "",
   password: "",
 };
 

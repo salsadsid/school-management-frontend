@@ -1,29 +1,23 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router-dom";
 
 const AuthRequired = ({ children }) => {
-  const { user_info } = useSelector((state) => state.auth);
-  const [loading, setLoading] = useState(true);
+  const { user_info, userLoading: loading } = useSelector(
+    (state) => state.auth
+  );
 
-  useEffect(() => {
-    // If the user_info is available, we're done loading.
-    if (user_info !== undefined) {
-      setLoading(false);
-    }
-  }, [user_info]);
-
-  // If still loading, show loading state
+  // If authentication is still in progress, show a loading state
   if (loading) {
     return <div>Loading...</div>;
   }
 
-  // If there's no user_info, redirect to login
+  // If user_info doesn't exist, redirect to login
   if (!user_info) {
     return <Navigate to="/auth/sign-in" />;
   }
 
-  // If user_info exists, render children
+  // If user_info exists, render the children components
   return children;
 };
 
