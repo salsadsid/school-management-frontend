@@ -15,7 +15,10 @@ import {
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { isSystem, schoolName } from "../../configs/systemConfiguration";
+import {
+  isSystem,
+  schoolNameWithLogo,
+} from "../../configs/systemConfiguration";
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
@@ -172,7 +175,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: isSystem ? "School Management" : schoolName,
+  brandName: isSystem ? "School Management" : schoolNameWithLogo,
 };
 
 Sidenav.propTypes = {

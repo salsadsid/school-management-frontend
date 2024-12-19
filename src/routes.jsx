@@ -1,5 +1,11 @@
 import { SignIn, SignUp } from "@/pages/auth";
-import { Classes, NewClass, NewStudent, Students } from "@/pages/dashboard";
+import {
+  AdmissionSubmission,
+  Classes,
+  NewClass,
+  NewStudent,
+  Students,
+} from "@/pages/dashboard";
 import { Home } from "@/pages/home";
 import {
   HomeIcon,
@@ -61,6 +67,19 @@ export const routes = [
         name: "New Student",
         path: "/student-new",
         element: <NewStudent />,
+      },
+    ],
+  },
+  {
+    layout: "dashboard",
+    title: "Admission",
+    isAccordion: true,
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Form Submissions",
+        path: "/form-submissions",
+        element: <AdmissionSubmission />,
       },
     ],
   },

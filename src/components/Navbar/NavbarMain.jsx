@@ -14,7 +14,10 @@ import React from "react";
 import { FaBars, FaXmark } from "react-icons/fa6";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { isSystem, schoolName } from "../../configs/systemConfiguration";
+import {
+  isSystem,
+  schoolNameWithLogo,
+} from "../../configs/systemConfiguration";
 import { logout } from "../../redux/slices/authSlice";
 
 export function NavbarMain() {
@@ -30,14 +33,11 @@ export function NavbarMain() {
   }, []);
 
   return (
-    <Navbar color="amber" fullWidth>
+    <Navbar color="teal" fullWidth>
       <div className="container mx-auto flex items-center justify-between text-blue-gray-900">
         <Link to="/">
-          <Typography
-            color="blue-gray"
-            className="mr-4 cursor-pointer text-lg font-bold"
-          >
-            {isSystem ? "School Management System" : schoolName}
+          <Typography className="mr-4 cursor-pointer text-lg text-gray-200  font-bold">
+            {isSystem ? "School Management System" : schoolNameWithLogo}
           </Typography>
         </Link>
         <div className="hidden lg:flex items-center gap-4 ">

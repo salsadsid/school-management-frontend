@@ -1,9 +1,12 @@
 export let isSystem = true;
 export const schoolName = "H. A. K. Academy";
+export const schoolNameWithLogo = `🏫 H. A. K. Academy`;
 
 export const changeSystem = (payload) => {
   isSystem = payload;
 };
+
+export const isSystemConfig = isSystem;
 
 export const homeHeroImage = {
   src: "/src/assets/home_hero_graphic.png",
