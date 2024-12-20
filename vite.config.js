@@ -7,4 +7,7 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
+  build: {
+    commonjsOptions: { transformMixedEsModules: true }, // Change
+  },
 });
