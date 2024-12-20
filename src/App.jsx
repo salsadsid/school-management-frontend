@@ -1,6 +1,6 @@
 import { Auth, Dashboard, MainLayout } from "@/layouts";
 import { AdmissionForm } from "@/pages/admission-form";
-import { Home } from "@/pages/home";
+import Home from "@/pages/home/home";
 
 import { Route, Routes } from "react-router-dom";
 import SuccessComponent from "./components/Success/SuccessComponent";
