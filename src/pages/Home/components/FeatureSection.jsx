@@ -35,7 +35,7 @@ export function FeatureSection() {
               insights and reports.
             </Typography>
             <img
-              src="/src/assets/attendence-removebg-preview.png"
+              src="assets/attendence-removebg-preview.png"
               alt="attendance"
               className="w-full xl:h-[370px] lg:h-[360px] lg:translate-y-8 translate-y-7 object-cover object-center"
             />
@@ -58,7 +58,7 @@ export function FeatureSection() {
               parents and administrators.
             </Typography>
             <img
-              src="/src/assets/fee_management.jpg"
+              src="assets/fee_management.jpg"
               alt="fee management"
               className="w-full lg:h-[380px] md:h-[300px] h-[220px] lg:translate-y-16 translate-y-10 object-cover object-center"
             />
@@ -80,7 +80,7 @@ export function FeatureSection() {
               and communication.
             </Typography>
             <img
-              src="/src/assets/4677878.webp"
+              src="assets/4677878.webp"
               alt="exam scheduling"
               className="w-1/2 mx-auto xl:h-[355px] lg:h-[380px] md:h-[300px] h-[180px] lg:translate-y-6 translate-y-10 object-cover object-top"
             />

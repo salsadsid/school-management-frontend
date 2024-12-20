@@ -9,7 +9,7 @@ export const changeSystem = (payload) => {
 export const isSystemConfig = isSystem;
 
 export const homeHeroImage = {
-  src: "/src/assets/home_hero_graphic.png",
+  src: "assets/home_hero_graphic.png",
   alt: "hero-bg",
 };
 
@@ -28,6 +28,6 @@ export const homeHeroDetails = (schoolName) => {
 };
 
 export const loginPageImage = {
-  src: "/src/assets/login_graphic.png",
+  src: "assets/login_graphic.png",
   alt: "login-bg",
 };

@@ -26,7 +26,7 @@ export function SchoolMessageSection() {
         </Typography>
         <div className="grid grid-cols-1 gap-x-12 gap-y-6 lg:grid-cols-2 items-start">
           <img
-            src="/src/assets/school_map.png"
+            src="assets/school_map.png"
             alt="school map"
             className="w-full h-full lg:max-h-[510px] object-cover rounded-lg"
           />

@@ -11,11 +11,7 @@ export default function SuccessComponent({
 }) {
   return (
     <main className="flex flex-col items-center justify-center ">
-      <img
-        src="/src/assets/success_tick.gif"
-        alt="Success"
-        className="w-[500px]"
-      />
+      <img src="assets/success_tick.gif" alt="Success" className="w-[500px]" />
       <p className="text-2xl font-bold text-gray-800">{successMessage}</p>
       {backButton && (
         <Link to={backTo}>
