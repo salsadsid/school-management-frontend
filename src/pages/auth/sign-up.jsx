@@ -6,7 +6,7 @@ export function SignUp() {
     <section className="m-8 flex items-center">
       <div className="w-2/5 h-full hidden lg:block">
         <img
-          src={loginPageImage.src}
+          src="/assets/login_graphic.png"
           alt={loginPageImage.alt}
           className="h-full w-full object-cover rounded-3xl"
         />

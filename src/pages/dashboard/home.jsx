@@ -18,7 +18,7 @@ export function Home() {
         </p>
       </div>
       <img
-        src={homeHeroImage.src}
+        src="/assets/home_hero_graphic.png"
         alt={homeHeroImage.alt}
         className="object-cover w-full h-5/6 rounded-xl"
       />

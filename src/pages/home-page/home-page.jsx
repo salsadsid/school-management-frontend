@@ -43,7 +43,7 @@ export const HomePage = () => {
       {/* Features */}
       <FeatureSection />
       <section className="my-12 container mx-auto">
-        <div className="p-10 rounded-l-xl border border-blue-gray-100 bg-[url('assets/book_graphics.jpg')] rounded-xl bg-no-repeat lg:bg-contain bg-cover bg-right">
+        <div className="p-10 rounded-l-xl border border-blue-gray-100 bg-[url('/assets/book_graphics.jpg')] rounded-xl bg-no-repeat lg:bg-contain bg-cover bg-right">
           <Typography
             variant="small"
             color="blue-gray"
