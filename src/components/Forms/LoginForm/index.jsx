@@ -1,14 +1,17 @@
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../../redux/api/authApi";
+import { createPromiseToast } from "../../../utils/promiseToast";
+import AlertMessage from "../../Alerts";
 import FormValidationError from "../../Errors/FormValidationError";
 import useLoginFormHook from "./useLoginFormHook";
 
 const LoginForm = ({ isTeacher }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderLoginFormHookProps } = useLoginFormHook({ isTeacher });
   const navigate = useNavigate();
@@ -19,13 +22,15 @@ const LoginForm = ({ isTeacher }) => {
   } = renderLoginFormHookProps;
 
   const submitHandler = async (data) => {
+    const toast = createPromiseToast();
+    const { successToast, errorToast } = toast();
     try {
       const res = await loginUser(data).unwrap();
       console.log(res, "res");
-
+      successToast({ message: "Login successful" });
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
     }
   };
 
@@ -77,8 +82,23 @@ const LoginForm = ({ isTeacher }) => {
             <FormValidationError errorMessage={errors.password.message} />
           )}
         </div>
-        <Button size="lg" className="mt-6" fullWidth type="submit">
-          sign in
+        {isError && (
+          <AlertMessage
+            className="rounded flex items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
+            icon={<MdErrorOutline />}
+          >
+            {error?.data?.message ?? "An error occurred"}
+          </AlertMessage>
+        )}
+        <Button
+          size="lg"
+          loading={isLoading}
+          className="mt-6 flex justify-center"
+          fullWidth
+          type="submit"
+          color="teal"
+        >
+          {isLoading ? "Logging in..." : "Log in"}
         </Button>
         {/* <div className="!mt-4 flex justify-end">
           <Typography

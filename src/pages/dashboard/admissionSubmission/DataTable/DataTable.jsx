@@ -24,8 +24,8 @@ export function DataTable({ columns, data, handleNext, handlePrevious }) {
 
   return (
     <div className="mb-6 max-w-screen-2xl overflow-x-auto rounded-md border bg-white shadow-md">
-      <table>
-        <thead className="bg-gray-100">
+      <table className="w-full">
+        <thead className="bg-gray-100 w-full">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
               {headerGroup.headers.map((header) => {
@@ -43,13 +43,13 @@ export function DataTable({ columns, data, handleNext, handlePrevious }) {
             </tr>
           ))}
         </thead>
-        <tbody>
+        <tbody className="w-full divide-y divide-gray-200">
           {table.getRowModel().rows?.length ? (
             table.getRowModel().rows.map((row) => (
               <tr
                 key={row.id}
                 data-state={row.getIsSelected() && "selected"}
-                className="border-b last:border-b-0 "
+                className="border-b last:border-b-0 text-sm"
               >
                 {row.getVisibleCells().map((cell) => (
                   <td key={cell.id}>
@@ -68,15 +68,10 @@ export function DataTable({ columns, data, handleNext, handlePrevious }) {
         </tbody>
       </table>
       <div className="mr-4 flex items-center justify-end space-x-2 py-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={handlePrevious}
-          disabled={handlePrevious === "end"}
-        >
+        <Button variant="outline" size="sm" onClick={handlePrevious} disabled>
           Previous
         </Button>
-        <Button size="sm" onClick={handleNext} disabled={handleNext === "end"}>
+        <Button size="sm" onClick={handleNext} disabled>
           Next
         </Button>
       </div>

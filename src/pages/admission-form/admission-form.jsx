@@ -9,9 +9,11 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormValidationError from "../../components/Errors/FormValidationError";
 import { useAddAdmissionInfoMutation } from "../../redux/api/admissionApi";
+import { createPromiseToast } from "../../utils/promiseToast";
 
 // Validation Schema with Yup
 const admissionFormSchema = Yup.object().shape({
@@ -63,13 +65,21 @@ export const AdmissionForm = () => {
     resolver: yupResolver(admissionFormSchema),
   });
   const [addAdmissionInfo, { isLoading }] = useAddAdmissionInfoMutation();
+  const navigate = useNavigate();
   const onSubmit = async (data) => {
     console.log("Form Submitted Data:", data);
+    const toast = createPromiseToast();
+    const { errorToast } = toast();
     try {
       const response = await addAdmissionInfo(data).unwrap();
       console.log(response);
+      if (response.status === "success") {
+        // Redirect to success page
+        navigate("/success");
+      }
     } catch (err) {
       console.error(err);
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
     }
   };
 
@@ -410,9 +420,10 @@ export const AdmissionForm = () => {
             color="teal"
             size="lg"
             type="submit"
-            className="md:w-1/2 w-full"
+            className="md:w-1/2 w-full flex justify-center normal-case text-lg font-medium"
+            loading={isLoading}
           >
-            Submit
+            {isLoading ? "Submitting..." : "Submit Admission Form"}
           </Button>
         </div>
       </form>

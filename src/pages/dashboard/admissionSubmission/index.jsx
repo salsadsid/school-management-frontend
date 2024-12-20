@@ -4,7 +4,8 @@ import { CiExport } from "react-icons/ci";
 import { useGetAllAdmissionInfoQuery } from "../../../redux/api/admissionApi";
 import { DataTable } from "./DataTable/DataTable";
 import { columns } from "./DataTable/columns";
-import { websiteDataJsonToCSV } from "./utils";
+import TableSkeleton from "./components/TableSkeleton";
+import { admissionDataJsonToCSV } from "./utils";
 
 export const AdmissionSubmission = () => {
   const {
@@ -12,9 +13,10 @@ export const AdmissionSubmission = () => {
     isLoading,
     error,
   } = useGetAllAdmissionInfoQuery();
-
+  const [downloadLoading, setDownloadLoading] = React.useState(false);
   const handleExportData = () => {
-    let csvData = websiteDataJsonToCSV(admissionInfo);
+    setDownloadLoading(true);
+    let csvData = admissionDataJsonToCSV(admissionInfo);
     let blob = new Blob([csvData], { type: "text/csv" });
     let url = window.URL.createObjectURL(blob);
     let a = document.createElement("a");
@@ -22,9 +24,10 @@ export const AdmissionSubmission = () => {
     a.download = `admission-submission-${new Date().toISOString()}.csv`;
     document.body.appendChild(a);
     a.click();
+    setDownloadLoading(false);
   };
   return (
-    <div className="mx-auto max-w-full px-4 md:px-4 md:py-4">
+    <div className="mx-auto max-w-full min-h-[82vh] px-4 md:px-4 md:py-4">
       <div className="flex justify-between items-center mb-4">
         <Typography variant="h4" className="">
           Admission Submissions
@@ -35,22 +38,20 @@ export const AdmissionSubmission = () => {
           size="sm"
           onClick={handleExportData}
           color="teal"
+          loading={downloadLoading}
           disabled={isLoading || !admissionInfo?.length || error} // disable button if there is no data
         >
-          <CiExport size={22} /> Export
+          <CiExport size={22} /> Export ALl
         </Button>
       </div>
       {isLoading ? (
-        <h1>Loading...</h1>
+        <TableSkeleton />
+      ) : admissionInfo?.length ? (
+        <DataTable columns={columns} data={admissionInfo} />
       ) : (
-        admissionInfo?.length && (
-          <DataTable
-            columns={columns}
-            data={admissionInfo}
-            handleNext={"end"}
-            handlePrevious={"end"}
-          />
-        )
+        <Typography color="red" className="text-center">
+          No admission submission data found
+        </Typography>
       )}
     </div>
   );

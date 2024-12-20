@@ -76,14 +76,16 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     <ListItem className="p-0" selected={open === 1}>
                       <AccordionHeader
                         onClick={() => handleOpen(key)}
-                        className="border-b-0 p-3"
+                        className={`border-b-0 p-3 ${
+                          open === key ? "bg-teal-50" : ""
+                        }`}
                       >
                         <ListItemPrefix>
                           <PresentationChartBarIcon className="h-5 w-5" />
                         </ListItemPrefix>
                         <Typography
                           color="blue-gray"
-                          className="mr-auto font-normal"
+                          className="mr-auto text-sm font-normal"
                         >
                           {title}
                         </Typography>
@@ -110,7 +112,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                                   {icon}
                                   <Typography
                                     color="inherit"
-                                    className="font-medium capitalize"
+                                    className="font-medium text-sm capitalize"
                                   >
                                     {name}
                                   </Typography>

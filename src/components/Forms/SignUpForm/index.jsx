@@ -8,8 +8,10 @@ import {
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { useRegisterUserMutation } from "../../../redux/api/authApi";
+import AlertMessage from "../../Alerts";
 import useSignUpFormHook from "./useSignUpFormHook";
 import { roles } from "./utils";
 const SignUpForm = () => {
@@ -90,8 +92,13 @@ const SignUpForm = () => {
             </Select>
           )}
         ></Controller>
-
-        <Button size="lg" className="mt-6" fullWidth type="submit">
+        <AlertMessage
+          className="rounded flex mt-6 items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
+          icon={<MdErrorOutline />}
+        >
+          You can&apos;t sign up at this moment.
+        </AlertMessage>
+        <Button disabled size="lg" className="mt-6" fullWidth type="submit">
           sign up
         </Button>
 

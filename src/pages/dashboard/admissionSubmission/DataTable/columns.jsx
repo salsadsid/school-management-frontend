@@ -1,5 +1,10 @@
 import { ArrowsUpDownIcon } from "@heroicons/react/16/solid";
 import { Checkbox } from "@material-tailwind/react";
+import {
+  admissionTypes,
+  branches,
+  classes,
+} from "../../../../configs/constOptions";
 
 export const columns = [
   {
@@ -39,6 +44,12 @@ export const columns = [
         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
       </button>
     ),
+    cell: ({ row }) => {
+      const findAdmissionType = admissionTypes.find(
+        (c) => c.value === row.original["admissionType"]
+      );
+      return <p>{findAdmissionType.label}</p>;
+    },
   },
   {
     accessorKey: "branch",
@@ -51,6 +62,12 @@ export const columns = [
         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
       </button>
     ),
+    cell: ({ row }) => {
+      const findBranch = branches.find(
+        (c) => c.value === row.original["branch"]
+      );
+      return <p>{findBranch.label}</p>;
+    },
   },
   {
     accessorKey: "studentName",
@@ -76,6 +93,10 @@ export const columns = [
         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
       </button>
     ),
+    cell: ({ row }) => {
+      const findClass = classes.find((c) => c.value === row.original["class"]);
+      return <p>{findClass.label}</p>;
+    },
   },
   {
     accessorKey: "session",
@@ -96,7 +117,7 @@ export const columns = [
         className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
       >
-        Father Name
+        Father&apos;s Name
         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
       </button>
     ),
@@ -137,18 +158,19 @@ export const columns = [
       );
     },
   },
-  {
-    accessorKey: "presentAddress",
-    header: ({ column }) => (
-      <button
-        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Present Address
-        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
-      </button>
-    ),
-  },
+
+  // {
+  //   accessorKey: "presentAddress",
+  //   header: ({ column }) => (
+  //     <button
+  //       className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
+  //       onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //     >
+  //       Present Address
+  //       <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
+  //     </button>
+  //   ),
+  // },
   {
     accessorKey: "permanentAddress",
     header: ({ column }) => (

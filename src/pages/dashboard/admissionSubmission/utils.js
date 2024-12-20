@@ -1,4 +1,4 @@
-export function websiteDataJsonToCSV(data) {
+export function admissionDataJsonToCSV(data) {
   let csv = "";
 
   let headers = [

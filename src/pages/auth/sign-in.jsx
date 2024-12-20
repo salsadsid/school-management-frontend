@@ -10,12 +10,12 @@ import { loginPageImage } from "../../configs/systemConfiguration";
 
 const data = [
   {
-    label: "Student Login",
+    label: "Student",
     value: "student",
     component: <LoginForm isTeacher={false} />,
   },
   {
-    label: "Teacher Login",
+    label: "Admin/Teacher",
     value: "teacher",
     component: <LoginForm isTeacher={true} />,
   },

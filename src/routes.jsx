@@ -2,11 +2,12 @@ import { SignIn, SignUp } from "@/pages/auth";
 import {
   AdmissionSubmission,
   Classes,
+  Home,
   NewClass,
   NewStudent,
   Students,
 } from "@/pages/dashboard";
-import { Home } from "@/pages/home";
+
 import {
   HomeIcon,
   RectangleStackIcon,
@@ -33,7 +34,7 @@ export const routes = [
 
   {
     layout: "dashboard",
-    title: "Classes",
+    title: "Class Management",
     isAccordion: true,
     pages: [
       {
@@ -45,7 +46,7 @@ export const routes = [
 
       {
         icon: <UserCircleIcon {...icon} />,
-        name: "New Class",
+        name: "Add New Class",
         path: "/classes-new",
         element: <NewClass />,
       },
@@ -53,7 +54,7 @@ export const routes = [
   },
   {
     layout: "dashboard",
-    title: "Students",
+    title: "Students Management",
     isAccordion: true,
     pages: [
       {
@@ -82,6 +83,19 @@ export const routes = [
         element: <AdmissionSubmission />,
       },
     ],
+  },
+
+  {
+    layout: "dashboard",
+    title: "Exam Management",
+    isAccordion: true,
+    pages: [],
+  },
+  {
+    layout: "dashboard",
+    title: "Fee Management",
+    isAccordion: true,
+    pages: [],
   },
   {
     title: "auth pages",

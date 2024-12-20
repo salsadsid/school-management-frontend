@@ -44,7 +44,7 @@ export function NavbarMain() {
           {user_info && (
             <div className="hidden lg:block">
               <Link to="/dashboard/">
-                <Typography color="blue-gray" className="mr-4 cursor-pointer">
+                <Typography className="mr-4 cursor-pointer text-gray-100 font-medium">
                   Dashboard
                 </Typography>
               </Link>
