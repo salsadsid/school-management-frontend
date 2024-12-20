@@ -1,10 +1,11 @@
 import { Auth, Dashboard, MainLayout } from "@/layouts";
 import { AdmissionForm } from "@/pages/admission-form";
-import { Home } from "@/pages/home";
+// import { Home } from "@/pages/home";
 
 import { Route, Routes } from "react-router-dom";
 import SuccessComponent from "./components/Success/SuccessComponent";
 import AuthRequired from "./helpers/AuthRequired";
+import Home from "./pages/dashboard/home";
 
 function App() {
   return (
