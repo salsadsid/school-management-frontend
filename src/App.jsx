@@ -1,6 +1,6 @@
 import { Auth, Dashboard, MainLayout } from "@/layouts";
 import { AdmissionForm } from "@/pages/admission-form";
-// import { Home } from "./pages/home";
+import { Home } from "./pages/home";
 
 import { Route, Routes } from "react-router-dom";
 import SuccessComponent from "./components/Success/SuccessComponent";
@@ -10,7 +10,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>
-        {/* <Route index element={<Home />} /> */}
+        <Route path="/" element={<Home />} />
         <Route path="/auth/*" element={<Auth />} />
         <Route path="/admission-form" element={<AdmissionForm />} />
         <Route path="/success" element={<SuccessComponent />} />
