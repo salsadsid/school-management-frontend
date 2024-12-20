@@ -1,5 +1,5 @@
 import { apiSlice } from ".";
-import { authSlice, setToken } from "../slices/authSlice";
+import { authSlice, setToken, setUserLoading } from "../slices/authSlice";
 
 export const authApi = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -20,6 +20,7 @@ export const authApi = apiSlice.injectEndpoints({
               token: data.token,
             })
           );
+          dispatch(setUserLoading({ userLoading: true }));
           dispatch(authApi.endpoints.verifyUser.initiate(null));
         } catch (err) {
           console.log(err);

@@ -1,14 +1,14 @@
-import { Routes, Route } from "react-router-dom";
+import { setOpenConfigurator, useMaterialTailwindController } from "@/context";
+import routes from "@/routes";
+import {
+  Configurator,
+  DashboardNavbar,
+  Footer,
+  Sidenav,
+} from "@/widgets/layout";
 import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { IconButton } from "@material-tailwind/react";
-import {
-  Sidenav,
-  DashboardNavbar,
-  Configurator,
-  Footer,
-} from "@/widgets/layout";
-import routes from "@/routes";
-import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import { Route, Routes } from "react-router-dom";
 
 export function Dashboard() {
   const [controller, dispatch] = useMaterialTailwindController();
@@ -39,7 +39,7 @@ export function Dashboard() {
             ({ layout, pages }) =>
               layout === "dashboard" &&
               pages.map(({ path, element }) => (
-                <Route exact path={path} element={element} />
+                <Route exact path={path} key={path} element={element} />
               ))
           )}
         </Routes>

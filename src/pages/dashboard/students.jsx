@@ -1,19 +1,21 @@
-import {
-  Button,
-  Card,
-  CardBody,
-  CardFooter,
-  Typography,
-} from "@material-tailwind/react";
+import { Alert } from "@material-tailwind/react";
 import React from "react";
 import { useGetAllStudentsQuery } from "../../redux/api/studentApi";
+import { RiAdminFill } from "react-icons/ri";
 
 export const Students = () => {
   const { data } = useGetAllStudentsQuery();
+  const [openAlert, setOpenAlert] = React.useState(true);
   console.log(data);
   return (
-    <div>
-      {data?.map((item) => (
+    <div className="mx-auto max-w-screen-xl px-4 md:px-12 md:py-12 min-h-[82vh]">
+      <Alert open={openAlert} color="amber" onClose={() => setOpenAlert(true)}>
+        <div className="flex items-center gap-4">
+          <RiAdminFill />
+          <p className="text-sm ">You are not authorized to view this page.</p>
+        </div>
+      </Alert>
+      {/* {data?.map((item) => (
         <Card className="mt-6 w-96" key={item._id}>
           <CardBody>
             <Typography variant="h5" color="blue-gray" className="mb-2">
@@ -33,7 +35,7 @@ export const Students = () => {
             <Button>Read More</Button>
           </CardFooter>
         </Card>
-      ))}
+      ))} */}
     </div>
   );
 };

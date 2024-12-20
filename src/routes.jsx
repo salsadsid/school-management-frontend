@@ -1,16 +1,19 @@
+import { SignIn, SignUp } from "@/pages/auth";
+import {
+  AdmissionSubmission,
+  Classes,
+  Home,
+  NewClass,
+  NewStudent,
+  Students,
+} from "@/pages/dashboard";
+
 import {
   HomeIcon,
   RectangleStackIcon,
   ServerStackIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-// import Classes from "./pages/dashboard/classes";
-// import NewClass from "./pages/dashboard/newclass";
-
-import { SignIn, SignUp } from "@/pages/auth";
-import { Classes, NewClass, NewStudent, Students } from "@/pages/dashboard";
-
-// import NewStudent from "./pages/dashboard/newStudent";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -22,6 +25,20 @@ export const routes = [
     pages: [
       {
         icon: <HomeIcon {...icon} />,
+        name: "Dashboard",
+        path: "/",
+        element: <Home />,
+      },
+    ],
+  },
+
+  {
+    layout: "dashboard",
+    title: "Class Management",
+    isAccordion: true,
+    pages: [
+      {
+        icon: <HomeIcon {...icon} />,
         name: "All Classes",
         path: "/classes",
         element: <Classes />,
@@ -29,10 +46,17 @@ export const routes = [
 
       {
         icon: <UserCircleIcon {...icon} />,
-        name: "New Class",
+        name: "Add New Class",
         path: "/classes-new",
         element: <NewClass />,
       },
+    ],
+  },
+  {
+    layout: "dashboard",
+    title: "Students Management",
+    isAccordion: true,
+    pages: [
       {
         icon: <UserCircleIcon {...icon} />,
         name: "All Students",
@@ -46,6 +70,32 @@ export const routes = [
         element: <NewStudent />,
       },
     ],
+  },
+  {
+    layout: "dashboard",
+    title: "Admission",
+    isAccordion: true,
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Form Submissions",
+        path: "/form-submissions",
+        element: <AdmissionSubmission />,
+      },
+    ],
+  },
+
+  {
+    layout: "dashboard",
+    title: "Exam Management",
+    isAccordion: true,
+    pages: [],
+  },
+  {
+    layout: "dashboard",
+    title: "Fee Management",
+    isAccordion: true,
+    pages: [],
   },
   {
     title: "auth pages",

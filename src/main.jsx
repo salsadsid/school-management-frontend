@@ -7,6 +7,7 @@ import "./index.css";
 import store from "./redux/store";
 
 import { ThemeProvider } from "@material-tailwind/react";
+import { Toaster } from "react-hot-toast";
 import { BrowserRouter } from "react-router-dom";
 import { persistStore } from "redux-persist";
 import App from "./App";
@@ -21,6 +22,7 @@ createRoot(document.getElementById("root")).render(
               <App />
             </MaterialTailwindControllerProvider>
           </ThemeProvider>
+          <Toaster position="top-center" reverseOrder={false} />
         </PersistGate>
       </Provider>
     </BrowserRouter>

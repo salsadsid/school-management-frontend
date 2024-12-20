@@ -1,14 +1,17 @@
-import { useState } from "react";
-
 import { Button, Input, Typography } from "@material-tailwind/react";
+import { useState } from "react";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import { useNavigate } from "react-router-dom";
+import { MdErrorOutline } from "react-icons/md";
+import { Link, useNavigate } from "react-router-dom";
 import { useLoginUserMutation } from "../../../redux/api/authApi";
+import { createPromiseToast } from "../../../utils/promiseToast";
+import AlertMessage from "../../Alerts";
+import FormValidationError from "../../Errors/FormValidationError";
 import useLoginFormHook from "./useLoginFormHook";
 
 const LoginForm = ({ isTeacher }) => {
   const [passwordShown, setPasswordShown] = useState(false);
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { isLoading, isError, error }] = useLoginUserMutation();
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderLoginFormHookProps } = useLoginFormHook({ isTeacher });
   const navigate = useNavigate();
@@ -19,40 +22,42 @@ const LoginForm = ({ isTeacher }) => {
   } = renderLoginFormHookProps;
 
   const submitHandler = async (data) => {
+    const toast = createPromiseToast();
+    const { successToast, errorToast } = toast();
     try {
-      const res = await loginUser(data);
-      console.log(res);
+      const res = await loginUser(data).unwrap();
+      console.log(res, "res");
+      successToast({ message: "Login successful" });
       navigate("/dashboard");
     } catch (err) {
-      console.log(err);
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
     }
   };
 
   return (
     <div>
-      <Typography variant="h3" color="blue-gray" className="mb-2">
-        Log in
-      </Typography>
-      <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-        Enter your {isTeacher ? "email" : "Student ID"} and password
-      </Typography>
-
       <form
         className="mx-auto max-w-[24rem] text-left"
         onSubmit={handleSubmit(submitHandler)}
       >
+        <Typography variant="h4" color="blue-gray" className="mb-2 text-center">
+          Log in
+        </Typography>
+        <Typography className="mb-6 text-gray-600 font-normal text-center text-[18px]">
+          Enter your {isTeacher ? "email" : "Student ID"} and password
+        </Typography>
         {isTeacher ? (
           <div className="mb-6">
             <Input label="Email" {...register("email")} />
             {errors.email && (
-              <span className="text-red-500">{errors.email.message}</span>
+              <FormValidationError errorMessage={errors.email.message} />
             )}
           </div>
         ) : (
           <div className="mb-6">
             <Input label="Student ID" {...register("studentId")} />
             {errors.studentId && (
-              <span className="text-red-500">{errors.studentId.message}</span>
+              <FormValidationError errorMessage={errors.studentId.message} />
             )}
           </div>
         )}
@@ -74,13 +79,28 @@ const LoginForm = ({ isTeacher }) => {
             }
           />
           {errors.password && (
-            <span className="text-red-500">{errors.password.message}</span>
+            <FormValidationError errorMessage={errors.password.message} />
           )}
         </div>
-        <Button size="lg" className="mt-6" fullWidth type="submit">
-          sign in
+        {isError && (
+          <AlertMessage
+            className="rounded flex items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
+            icon={<MdErrorOutline />}
+          >
+            {error?.data?.message ?? "An error occurred"}
+          </AlertMessage>
+        )}
+        <Button
+          size="lg"
+          loading={isLoading}
+          className="mt-6 flex justify-center"
+          fullWidth
+          type="submit"
+          color="teal"
+        >
+          {isLoading ? "Logging in..." : "Log in"}
         </Button>
-        <div className="!mt-4 flex justify-end">
+        {/* <div className="!mt-4 flex justify-end">
           <Typography
             as="a"
             href="#"
@@ -90,18 +110,23 @@ const LoginForm = ({ isTeacher }) => {
           >
             Forgot password
           </Typography>
-        </div>
+        </div> */}
 
-        <Typography
-          variant="small"
-          color="gray"
-          className="!mt-4 text-center font-normal"
-        >
-          Not registered?{" "}
-          <a href="#" className="font-medium text-gray-900">
-            Create account
-          </a>
-        </Typography>
+        {isTeacher && (
+          <Typography
+            variant="small"
+            color="gray"
+            className="!mt-4 text-center font-normal"
+          >
+            Not registered?{" "}
+            <Link
+              to="/auth/sign-up"
+              className="font-medium hover:underline text-gray-900"
+            >
+              Create account
+            </Link>
+          </Typography>
+        )}
       </form>
     </div>
   );

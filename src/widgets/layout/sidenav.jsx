@@ -1,28 +1,24 @@
 import { setOpenSidenav, useMaterialTailwindController } from "@/context";
 import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import {
-  Cog6ToothIcon,
-  InboxIcon,
-  PowerIcon,
-  PresentationChartBarIcon,
-  UserCircleIcon,
-} from "@heroicons/react/24/solid";
+import { PresentationChartBarIcon } from "@heroicons/react/24/solid";
 import {
   Accordion,
   AccordionBody,
   AccordionHeader,
   Button,
-  Chip,
   IconButton,
   List,
   ListItem,
   ListItemPrefix,
-  ListItemSuffix,
   Typography,
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import {
+  isSystem,
+  schoolNameWithLogo,
+} from "../../configs/systemConfiguration";
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavColor, sidenavType, openSidenav } = controller;
@@ -54,45 +50,81 @@ export function Sidenav({ brandImg, brandName, routes }) {
         </Link>
         <IconButton
           variant="text"
-          color="white"
+          // color="white"
           size="sm"
           ripple={false}
           className="absolute right-0 top-0 grid rounded-br-none rounded-tl-none xl:hidden"
           onClick={() => setOpenSidenav(dispatch, false)}
         >
-          <XMarkIcon strokeWidth={2.5} className="h-5 w-5 text-white" />
+          <XMarkIcon strokeWidth={2.5} className="h-5 w-5 " />
         </IconButton>
       </div>
       <div className="m-4">
         <List>
-          <Accordion
-            open={open === 1}
-            icon={
-              <ChevronDownIcon
-                strokeWidth={2.5}
-                className={`mx-auto h-4 w-4 transition-transform ${
-                  open === 1 ? "rotate-180" : ""
-                }`}
-              />
-            }
-          >
-            <ListItem className="p-0" selected={open === 1}>
-              <AccordionHeader
-                onClick={() => handleOpen(1)}
-                className="border-b-0 p-3"
-              >
-                <ListItemPrefix>
-                  <PresentationChartBarIcon className="h-5 w-5" />
-                </ListItemPrefix>
-                <Typography color="blue-gray" className="mr-auto font-normal">
-                  Dashboard
-                </Typography>
-              </AccordionHeader>
-            </ListItem>
-            <AccordionBody className="py-1">
-              {routes
-                .filter(({ layout }) => layout === "dashboard")
-                .map(({ layout, title, pages }, key) => (
+          {routes
+            .filter(({ layout }) => layout !== "auth")
+            .map(({ layout, title, pages, isAccordion }, key) => (
+              <div key={key}>
+                {isAccordion ? (
+                  <Accordion
+                    open={open === key}
+                    icon={
+                      <ChevronDownIcon strokeWidth={3} className="h-3 w-3" />
+                    }
+                    key={key}
+                  >
+                    <ListItem className="p-0" selected={open === 1}>
+                      <AccordionHeader
+                        onClick={() => handleOpen(key)}
+                        className={`border-b-0 p-3 ${
+                          open === key ? "bg-teal-50" : ""
+                        }`}
+                      >
+                        <ListItemPrefix>
+                          <PresentationChartBarIcon className="h-5 w-5" />
+                        </ListItemPrefix>
+                        <Typography
+                          color="blue-gray"
+                          className="mr-auto text-sm font-normal"
+                        >
+                          {title}
+                        </Typography>
+                      </AccordionHeader>
+                    </ListItem>
+                    <AccordionBody className="py-1">
+                      <ul>
+                        {pages.map(({ icon, name, path }) => (
+                          <li key={name}>
+                            <NavLink to={`/${layout}${path}`}>
+                              {({ isActive }) => (
+                                <Button
+                                  variant={isActive ? "gradient" : "text"}
+                                  color={
+                                    isActive
+                                      ? sidenavColor
+                                      : sidenavType === "dark"
+                                      ? "white"
+                                      : "blue-gray"
+                                  }
+                                  className="flex items-center gap-4 px-4 capitalize"
+                                  fullWidth
+                                >
+                                  {icon}
+                                  <Typography
+                                    color="inherit"
+                                    className="font-medium text-sm capitalize"
+                                  >
+                                    {name}
+                                  </Typography>
+                                </Button>
+                              )}
+                            </NavLink>
+                          </li>
+                        ))}
+                      </ul>
+                    </AccordionBody>
+                  </Accordion>
+                ) : (
                   <ul key={key} className="mb-4 flex flex-col gap-1">
                     {title && (
                       <li className="mx-3.5 mt-4 mb-2">
@@ -134,43 +166,9 @@ export function Sidenav({ brandImg, brandName, routes }) {
                       </li>
                     ))}
                   </ul>
-                ))}
-            </AccordionBody>
-          </Accordion>
-          <hr className="my-2 border-blue-gray-50" />
-          <ListItem>
-            <ListItemPrefix>
-              <InboxIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Inbox
-            <ListItemSuffix>
-              <Chip
-                value="14"
-                size="sm"
-                variant="ghost"
-                color="blue-gray"
-                className="rounded-full"
-              />
-            </ListItemSuffix>
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <UserCircleIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Profile
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <Cog6ToothIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Settings
-          </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Log Out
-          </ListItem>
+                )}
+              </div>
+            ))}
         </List>
       </div>
     </aside>
@@ -179,7 +177,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: "Material Tailwind React",
+  brandName: isSystem ? "School Management" : schoolNameWithLogo,
 };
 
 Sidenav.propTypes = {

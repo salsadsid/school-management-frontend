@@ -8,7 +8,10 @@ import {
 import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
+import { MdErrorOutline } from "react-icons/md";
+import { Link } from "react-router-dom";
 import { useRegisterUserMutation } from "../../../redux/api/authApi";
+import AlertMessage from "../../Alerts";
 import useSignUpFormHook from "./useSignUpFormHook";
 import { roles } from "./utils";
 const SignUpForm = () => {
@@ -36,11 +39,11 @@ const SignUpForm = () => {
         className="mx-auto max-w-xl text-left"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <Typography variant="h3" color="blue-gray" className="mb-2">
+        <Typography variant="h4" color="blue-gray" className="mb-2 text-center">
           Sign Up
         </Typography>
-        <Typography className="mb-16 text-gray-600 font-normal text-[18px]">
-          Enter your email and password
+        <Typography className="mb-6 text-gray-600 font-normal text-center text-[18px]">
+          Enter your email, password and role.
         </Typography>
         <div className="mb-6">
           <Input label="Email" {...register("email")} />
@@ -89,31 +92,28 @@ const SignUpForm = () => {
             </Select>
           )}
         ></Controller>
-
-        <Button size="lg" className="mt-6" fullWidth type="submit">
-          sign in
+        <AlertMessage
+          className="rounded flex mt-6 items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
+          icon={<MdErrorOutline />}
+        >
+          You can&apos;t sign up at this moment.
+        </AlertMessage>
+        <Button disabled size="lg" className="mt-6" fullWidth type="submit">
+          sign up
         </Button>
-        <div className="!mt-4 flex justify-end">
-          <Typography
-            as="a"
-            href="#"
-            color="blue-gray"
-            variant="small"
-            className="font-medium"
-          >
-            Forgot password
-          </Typography>
-        </div>
 
         <Typography
           variant="small"
           color="gray"
           className="!mt-4 text-center font-normal"
         >
-          Not registered?{" "}
-          <a href="#" className="font-medium text-gray-900">
-            Create account
-          </a>
+          Already have an account?{" "}
+          <Link
+            to="/auth/sign-in"
+            className="font-medium hover:underline text-gray-900"
+          >
+            Log in
+          </Link>
         </Typography>
       </form>
     </div>
