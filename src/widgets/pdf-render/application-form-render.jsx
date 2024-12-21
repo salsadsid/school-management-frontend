@@ -1,5 +1,6 @@
 import {
   Document,
+  Font,
   Image,
   Page,
   StyleSheet,
@@ -8,6 +9,11 @@ import {
 } from "@react-pdf/renderer";
 import React from "react";
 import { admissionTypes, branches, classes } from "../../configs/constOptions";
+
+Font.register({
+  family: "Ador",
+  src: "Li Ador Shurobhi Unicode.ttf",
+});
 
 const styles = StyleSheet.create({
   page: {
@@ -52,6 +58,10 @@ const styles = StyleSheet.create({
   },
   text: {
     marginBottom: 3,
+  },
+  banglaText: {
+    fontFamily: "Ador",
+    color: "#008080",
   },
   row: {
     flexDirection: "row",
@@ -149,7 +159,7 @@ const RenderApplicationFormPdf = ({ data }) => {
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Student Name (Bangla):</Text>{" "}
-                {data.studentNameBangla}
+                <Text style={styles.banglaText}>{data.studentNameBangla}</Text>
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Class:</Text> {findClass}
@@ -170,7 +180,7 @@ const RenderApplicationFormPdf = ({ data }) => {
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Father&apos;s Name (Bangla):</Text>{" "}
-                {data.fatherNameBangla}
+                <Text style={styles.banglaText}>{data.fatherNameBangla}</Text>
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Father&apos;s Occupation:</Text>{" "}
@@ -197,7 +207,7 @@ const RenderApplicationFormPdf = ({ data }) => {
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Mother&apos;s Name (Bangla):</Text>{" "}
-                {data.motherNameBangla}
+                <Text style={styles.banglaText}>{data.motherNameBangla}</Text>
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Mother&apos;s Occupation:</Text>{" "}
