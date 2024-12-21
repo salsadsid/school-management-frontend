@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-console.log(process.env.NODE_ENV);
+console.log(import.meta.env.VITE_NODE_ENV);
 const baseQuery = fetchBaseQuery({
   baseUrl:
     import.meta.env.VITE_NODE_ENV === "development"
