@@ -7,6 +7,7 @@ import {
   Textarea,
   Typography,
 } from "@material-tailwind/react";
+import cryptoRandomString from "crypto-random-string";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -68,14 +69,21 @@ export const AdmissionForm = () => {
   const navigate = useNavigate();
   const onSubmit = async (data) => {
     console.log("Form Submitted Data:", data);
+    const applicationIdGenerated = cryptoRandomString({
+      length: 6,
+      type: "distinguishable",
+    });
     const toast = createPromiseToast();
     const { errorToast } = toast();
     try {
-      const response = await addAdmissionInfo(data).unwrap();
+      const response = await addAdmissionInfo({
+        ...data,
+        applicationId: applicationIdGenerated,
+      }).unwrap();
       console.log(response);
       if (response.status === "success") {
         // Redirect to success page
-        navigate("/success");
+        navigate(`/success?applicationId=${response?.results?.applicationId}`);
       }
     } catch (err) {
       console.error(err);
@@ -228,6 +236,17 @@ export const AdmissionForm = () => {
 
           <div>
             <Input
+              label="Father's Name (Bangla)"
+              {...register("fatherNameBangla")}
+            />
+            {errors.fatherNameBangla && (
+              <FormValidationError
+                errorMessage={errors.fatherNameBangla.message}
+              />
+            )}
+          </div>
+          <div>
+            <Input
               label="Father's Occupation"
               {...register("fatherOccupation")}
             />
@@ -266,6 +285,15 @@ export const AdmissionForm = () => {
           {/* Mother's Name */}
           <div>
             <Input label="Mother's Name" {...register("motherName")} />
+            {errors.motherName && (
+              <FormValidationError errorMessage={errors.motherName.message} />
+            )}
+          </div>
+          <div>
+            <Input
+              label="Mother's Name (Bangla)"
+              {...register("motherNameBangla")}
+            />
             {errors.motherName && (
               <FormValidationError errorMessage={errors.motherName.message} />
             )}

@@ -12,8 +12,14 @@ const admissionApi = apiSlice.injectEndpoints({
     getAllAdmissionInfo: builder.query({
       query: () => "admission",
     }),
+    getAnAdmissionInfo: builder.query({
+      query: ({ id }) => `admission/${id}`,
+    }),
   }),
 });
 
-export const { useAddAdmissionInfoMutation, useGetAllAdmissionInfoQuery } =
-  admissionApi;
+export const {
+  useAddAdmissionInfoMutation,
+  useGetAllAdmissionInfoQuery,
+  useGetAnAdmissionInfoQuery,
+} = admissionApi;

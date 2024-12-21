@@ -77,7 +77,7 @@ export function NavbarMain() {
               </MenuHandler>
               <MenuList>
                 <p className="flex items-center gap-2 pb-4 pt-2 justify-center">
-                  Hello, {user_info.name}
+                  Hello, {user_info?.email?.split("@")[0]}
                 </p>
                 <MenuItem className="flex items-center gap-2">
                   <svg
@@ -159,7 +159,9 @@ export function NavbarMain() {
 
           {user_info && (
             <>
-              <p className="pt-4">Hello, {user_info.name}</p>
+              <p className="text-gray-700 font-semibold mt-4">
+                Hello, {user_info.email?.split("@")[0]}
+              </p>
               <Button
                 color="gray"
                 onClick={() => dispatch(logout())}
