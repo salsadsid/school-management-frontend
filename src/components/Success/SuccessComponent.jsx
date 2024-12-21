@@ -39,7 +39,7 @@ export default function SuccessComponent({
           </div>
           <PDFDownloadLink
             document={<RenderApplicationFormPdf data={applicationData} />}
-            fileName={`application-form-${applicationData?.studentName}-${applicationData.applicationId}.pdf`}
+            fileName={`application-${applicationData?.studentName}-${applicationData.applicationId}.pdf`}
           >
             {({ loading }) =>
               loading || isLoading ? (

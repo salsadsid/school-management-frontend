@@ -195,4 +195,24 @@ export const columns = [
   //       </button>
   //     ),
   //   },
+  // {
+  //   accessorKey: "Action",
+  //   show: false,
+  //   header: ({ column }) => {
+  //     return (
+  //       <button
+  //         className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
+  //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+  //       >
+  //         Actions
+  //         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
+  //       </button>
+  //     );
+  //   },
+  //   cell: ({ row }) => {
+  //     //TODO
+  //     // console.log(row);
+  //     return <DeleteAnApplication />;
+  //   },
+  // },
 ];

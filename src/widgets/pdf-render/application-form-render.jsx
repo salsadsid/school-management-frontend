@@ -228,7 +228,7 @@ const RenderApplicationFormPdf = ({ data }) => {
             <View style={styles.column}>
               <Text style={styles.text}>
                 <Text style={styles.label}>Date of Birth:</Text>{" "}
-                {new Date(data.dateOfBirth).toLocaleDateString()}
+                {new Date(data.dateOfBirth).toLocaleDateString("en-GB")}
               </Text>
               <Text style={styles.text}>
                 <Text style={styles.label}>Blood Group:</Text> {data.bloodGroup}

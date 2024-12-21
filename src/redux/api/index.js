@@ -1,7 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+console.log(process.env.NODE_ENV);
 const baseQuery = fetchBaseQuery({
-  baseUrl: "https://school-management-backend-uhc1.onrender.com/api/v1",
+  baseUrl:
+    import.meta.env.VITE_NODE_ENV === "development"
+      ? import.meta.env.VITE_NODE_ENV_DEVELOPMENT
+      : import.meta.env.VITE_NODE_ENV_PRODUCTION,
   prepareHeaders: (headers, { getState }) => {
     const token = getState()?.auth?.token;
     // console.log(token);
