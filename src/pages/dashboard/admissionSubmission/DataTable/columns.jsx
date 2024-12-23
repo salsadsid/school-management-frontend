@@ -1,10 +1,11 @@
 import { ArrowsUpDownIcon } from "@heroicons/react/16/solid";
-import { Checkbox } from "@material-tailwind/react";
+import { Checkbox, Tooltip } from "@material-tailwind/react";
 import {
   admissionTypes,
   branches,
   classes,
 } from "../../../../configs/constOptions";
+import ApplicationModal from "../components/ViewApplication";
 
 export const columns = [
   {
@@ -66,8 +67,20 @@ export const columns = [
       const findBranch = branches.find(
         (c) => c.value === row.original["branch"]
       );
-      return <p>{findBranch.label}</p>;
+      return <p>{findBranch.label.split(" ")[0]}</p>;
     },
+  },
+  {
+    accessorKey: "applicationId",
+    header: ({ column }) => (
+      <button
+        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        ID
+        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
+      </button>
+    ),
   },
   {
     accessorKey: "studentName",
@@ -182,6 +195,65 @@ export const columns = [
         <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
       </button>
     ),
+    cell: ({ row }) => {
+      let address = row.original["permanentAddress"];
+      return (
+        <p title={address}>
+          {address?.length > 20 ? (
+            <Tooltip content={address}>
+              {address.substring(0, 20) + "..."}
+            </Tooltip>
+          ) : (
+            address
+          )}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "status",
+    header: ({ column }) => (
+      <button
+        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Status
+        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
+      </button>
+    ),
+    cell: ({ row }) => {
+      let status = row.original["status"];
+      return (
+        <p>
+          {status === "pending" ? (
+            <span className="text-yellow-800 bg-yellow-50 p-1 rounded">
+              Pending
+            </span>
+          ) : status === "approved" ? (
+            <span className="text-green-500 bg-green-50 p-1 rounded">
+              Approved
+            </span>
+          ) : (
+            <span className="text-red-500 bg-red-50 p-1 rounded">Rejected</span>
+          )}
+        </p>
+      );
+    },
+  },
+  {
+    accessorKey: "Action",
+    header: ({ column }) => (
+      <button
+        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+      >
+        Actions
+        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
+      </button>
+    ),
+    cell: ({ row }) => {
+      return <ApplicationModal row={row.original} />;
+    },
   },
   //   {
   //     accessorKey: "emergencyContactNo",

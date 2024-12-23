@@ -53,7 +53,7 @@ export default function SuccessComponent({
                   className="flex text-sm items-center gap-2"
                 >
                   <BiDownload />
-                  Download
+                  Download Application
                 </Button>
               )
             }

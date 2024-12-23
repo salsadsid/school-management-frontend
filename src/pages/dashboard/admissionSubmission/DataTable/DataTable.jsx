@@ -24,7 +24,7 @@ export function DataTable({ columns, data, handleNext, handlePrevious }) {
 
   return (
     <div className="mb-6 max-w-screen-2xl overflow-x-auto rounded-md border bg-white shadow-md">
-      <table className="w-full">
+      <table className="w-full text-lg">
         <thead className="bg-gray-100 w-full">
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
@@ -68,7 +68,7 @@ export function DataTable({ columns, data, handleNext, handlePrevious }) {
         </tbody>
       </table>
       <div className="mr-4 flex items-center justify-end space-x-2 py-4">
-        <Button variant="outline" size="sm" onClick={handlePrevious} disabled>
+        <Button variant="outlined" size="sm" onClick={handlePrevious} disabled>
           Previous
         </Button>
         <Button size="sm" onClick={handleNext} disabled>

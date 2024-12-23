@@ -1,5 +1,4 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-console.log(import.meta.env.VITE_NODE_ENV);
 const baseQuery = fetchBaseQuery({
   baseUrl:
     import.meta.env.VITE_NODE_ENV === "development"
@@ -18,6 +17,10 @@ const baseQuery = fetchBaseQuery({
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: baseQuery,
-  tagTypes: [],
+  tagTypes: [
+    "getAllAdmissionInfo",
+    "getAnAdmissionInfo",
+    "updateAnAdmissionInfo",
+  ],
   endpoints: () => ({}),
 });
