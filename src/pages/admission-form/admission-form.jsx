@@ -13,6 +13,7 @@ import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import FormValidationError from "../../components/Errors/FormValidationError";
+import { groups } from "../../configs/constOptions";
 import { useAddAdmissionInfoMutation } from "../../redux/api/admissionApi";
 import { createPromiseToast } from "../../utils/promiseToast";
 
@@ -42,8 +43,14 @@ const admissionFormSchema = Yup.object().shape({
       "class_6",
       "class_7",
       "class_8",
+      "class_9",
     ])
     .label("Select Class"),
+  group: Yup.string().when("class", {
+    is: "class_9",
+    then: (schema) => schema.required(),
+    otherwise: (schema) => schema.notRequired(),
+  }),
   fatherName: Yup.string().required("Father's name is required"),
   motherName: Yup.string().required("Mother's name is required"),
   presentAddress: Yup.string().required("Present Address is required"),
@@ -62,9 +69,11 @@ export const AdmissionForm = () => {
     handleSubmit,
     control,
     formState: { errors },
+    watch,
   } = useForm({
     resolver: yupResolver(admissionFormSchema),
   });
+  const currentValues = watch();
   const [addAdmissionInfo, { isLoading }] = useAddAdmissionInfoMutation();
   const navigate = useNavigate();
   const onSubmit = async (data) => {
@@ -76,6 +85,7 @@ export const AdmissionForm = () => {
     const toast = createPromiseToast();
     const { errorToast } = toast();
     try {
+      console.log(data);
       const response = await addAdmissionInfo({
         ...data,
         applicationId: applicationIdGenerated,
@@ -206,6 +216,7 @@ export const AdmissionForm = () => {
                   <Option value="class_6">Class 6</Option>
                   <Option value="class_7">Class 7</Option>
                   <Option value="class_8">Class 8</Option>
+                  <Option value="class_9">Class 9</Option>
                 </Select>
               )}
             />
@@ -214,7 +225,31 @@ export const AdmissionForm = () => {
               <FormValidationError errorMessage={errors.class.message} />
             )}
           </div>
-
+          {currentValues?.class === "class_9" && (
+            <div>
+              <Controller
+                name="group"
+                control={control}
+                render={({ field: { onChange, value } }) => (
+                  <Select
+                    label="Select Group"
+                    name="group"
+                    value={value}
+                    onChange={onChange}
+                  >
+                    {groups?.map(({ value, label }) => (
+                      <Option value={value} key={value}>
+                        {label}
+                      </Option>
+                    ))}
+                  </Select>
+                )}
+              />
+              {errors.group && (
+                <FormValidationError errorMessage={errors.group.message} />
+              )}
+            </div>
+          )}
           {/* Session */}
           <div className="mb-6">
             <Input label="Session" {...register("session")} />

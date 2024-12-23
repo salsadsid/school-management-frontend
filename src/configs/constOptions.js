@@ -56,4 +56,23 @@ export const classes = [
     value: "class_8",
     label: "Class 8",
   },
+  {
+    value: "class_9",
+    label: "Class 9",
+  },
+];
+
+export const groups = [
+  {
+    value: "science",
+    label: "Science",
+  },
+  {
+    value: "business_studies",
+    label: "Business Studies",
+  },
+  {
+    value: "humanities",
+    label: "Humanities",
+  },
 ];
