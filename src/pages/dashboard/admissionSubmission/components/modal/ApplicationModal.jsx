@@ -4,10 +4,10 @@ import {
   DialogBody,
   DialogFooter,
   DialogHeader,
-  Input,
   Typography,
 } from "@material-tailwind/react";
 import { useState } from "react";
+import { CgClose } from "react-icons/cg";
 
 const ApplicationModal = ({
   application,
@@ -15,12 +15,12 @@ const ApplicationModal = ({
   onClose,
   onUpdate,
   onDelete,
+  isLoading,
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedApplication, setEditedApplication] = useState({
     ...application,
   });
-  console.log(application);
   const handleEditChange = (e) => {
     const { name, value } = e.target;
     setEditedApplication((prev) => ({ ...prev, [name]: value }));
@@ -32,20 +32,18 @@ const ApplicationModal = ({
   };
 
   return (
-    <Dialog
-      open={isOpen}
-      handler={onClose}
-      size="xl"
-      className="overflow-y-auto max-h-screen"
-    >
-      <DialogHeader>
+    <Dialog open={isOpen} handler={onClose} size="xl">
+      <DialogHeader className="flex justify-between ">
         <Typography variant="h5" color="blue-gray">
           Application Details
         </Typography>
+        <Button color="orange" variant="text" onClick={onClose}>
+          <CgClose className="h-5 w-5" />
+        </Button>
       </DialogHeader>
-      <DialogBody divider>
+      <DialogBody divider className="overflow-y-auto max-h-[70vh]">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {!isEditing ? (
+          {application &&
             Object.entries(application).map(([key, value]) => (
               <div key={key} className="space-y-1">
                 <p className="text-sm font-medium capitalize">
@@ -53,88 +51,51 @@ const ApplicationModal = ({
                 </p>
                 <p>{value || "N/A"}</p>
               </div>
-            ))
-          ) : (
-            <>
-              <Input
-                label="Student Name"
-                name="studentName"
-                value={editedApplication.studentName}
-                onChange={handleEditChange}
-              />
-              <Input
-                label="Father's Name"
-                name="fatherName"
-                value={editedApplication.fatherName}
-                onChange={handleEditChange}
-              />
-              <Input
-                label="Mother's Name"
-                name="motherName"
-                value={editedApplication.motherName}
-                onChange={handleEditChange}
-              />
-              <Input
-                label="Date of Birth"
-                name="dateOfBirth"
-                value={
-                  new Date(editedApplication.dateOfBirth)
-                    .toISOString()
-                    .split("T")[0]
-                }
-                onChange={handleEditChange}
-                type="date"
-              />
-              <Input
-                label="Address"
-                name="presentAddress"
-                value={editedApplication.presentAddress}
-                onChange={handleEditChange}
-              />
-            </>
-          )}
+            ))}
         </div>
       </DialogBody>
-      <DialogFooter>
-        {isEditing ? (
-          <>
-            <Button color="green" onClick={handleSave} className="mr-2">
-              Save Changes
-            </Button>
-            <Button color="gray" onClick={() => setIsEditing(false)}>
-              Cancel
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              color="blue"
-              onClick={() => setIsEditing(true)}
-              className="mr-2"
-              disabled
-            >
-              Edit Application
-            </Button>
-            <Button
-              color="red"
-              onClick={() => onDelete(application._id)}
-              className="mr-2"
-              disabled
-            >
-              Delete Application
-            </Button>
-            <Button
-              color="amber"
-              onClick={() => onUpdate({ ...application, status: "approved" })}
-              className="mr-2"
-            >
-              Approve Application
-            </Button>
-            <Button color="gray" onClick={onClose}>
-              Close
-            </Button>
-          </>
-        )}
+      <DialogFooter className="flex justify-end">
+        <Button
+          color="blue"
+          size="sm"
+          onClick={() => setIsEditing(true)}
+          className="mr-2"
+          disabled
+        >
+          Edit
+        </Button>
+        <Button
+          size="sm"
+          color="red"
+          onClick={() => onDelete(application._id)}
+          className="mr-2"
+          disabled
+        >
+          Delete
+        </Button>
+        <Button
+          size="sm"
+          color="amber"
+          loading={isLoading && application.status === "rejected"}
+          onClick={() => onUpdate({ ...application, status: "approved" })}
+          className="mr-2"
+          disabled={application.status === "approved" || isLoading}
+        >
+          Approve
+        </Button>
+        <Button
+          size="sm"
+          color="amber"
+          loading={isLoading && application.status === "approved"}
+          onClick={() => onUpdate({ ...application, status: "rejected" })}
+          className="mr-2"
+          disabled={application.status === "rejected" || isLoading}
+        >
+          Reject
+        </Button>
+        <Button size="sm" color="gray" onClick={onClose}>
+          Close
+        </Button>
       </DialogFooter>
     </Dialog>
   );
