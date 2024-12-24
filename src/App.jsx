@@ -1,5 +1,6 @@
 import { Auth, Dashboard, MainLayout } from "@/layouts";
 import { AdmissionForm } from "@/pages/admission-form";
+import { ApplicationDownload } from "@/pages/download-application";
 import { HomePage } from "@/pages/home-page";
 // import { Home } from "@/pages/home";
 
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/auth/*" element={<Auth />} />
         <Route path="/admission-form" element={<AdmissionForm />} />
+        <Route path="/download-application" element={<ApplicationDownload />} />
         <Route path="/success" element={<SuccessComponent />} />
       </Route>
       <Route

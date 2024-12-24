@@ -41,6 +41,11 @@ export function NavbarMain() {
           </Typography>
         </Link>
         <div className="hidden lg:flex items-center gap-4 ">
+          <Link to="download-application">
+            <Button color="gray" className="hidden lg:inline-block">
+              Download Application
+            </Button>
+          </Link>
           {user_info && (
             <div className="hidden lg:block">
               <Link to="/dashboard/">
@@ -147,6 +152,11 @@ export function NavbarMain() {
           <Link to="/dashboard/">
             <Typography color="blue-gray" className="mr-4 cursor-pointer">
               Dashboard
+            </Typography>
+          </Link>
+          <Link to="/download-application">
+            <Typography color="blue-gray" className="mr-4 cursor-pointer">
+              Download Application
             </Typography>
           </Link>
           {!user_info && (
