@@ -1,16 +1,29 @@
 import { Button } from "@material-tailwind/react";
 import React from "react";
 import { useUpdateAnAdmissionInfoMutation } from "../../../../redux/api/admissionApi";
+import { createPromiseToast } from "../../../../utils/promiseToast";
 import ApplicationModal from "./modal/ApplicationModal";
 
 export default function ViewApplication({ row }) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(!open);
   const handleClose = () => setOpen(false);
-  const [updateAnAdmissionInfo] = useUpdateAnAdmissionInfoMutation();
+  const [updateAnAdmissionInfo, { isLoading }] =
+    useUpdateAnAdmissionInfoMutation();
 
-  const onUpdate = (application) => {
-    updateAnAdmissionInfo({ id: application.applicationId, application });
+  const onUpdate = async (application) => {
+    const toast = createPromiseToast();
+    const { successToast, errorToast, loadingToast } = toast();
+    try {
+      loadingToast({ message: "Updating application..." });
+      await updateAnAdmissionInfo({
+        id: application.applicationId,
+        application,
+      }).unwrap();
+      successToast({ message: "Application updated successfully" });
+    } catch (err) {
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
+    }
   };
 
   return (
@@ -29,6 +42,7 @@ export default function ViewApplication({ row }) {
         isOpen={open}
         onClose={handleClose}
         onUpdate={onUpdate}
+        isLoading={isLoading}
       />
     </div>
   );
