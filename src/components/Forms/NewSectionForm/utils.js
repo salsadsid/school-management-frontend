@@ -1,6 +1,7 @@
-export const initialNewClassFormValues = {
+export const initialNewSectionFormValues = {
   name: "",
   //   description: "",
+  class: "",
   teacher: "",
   // classCode: "",
   // maxCapacity: "",

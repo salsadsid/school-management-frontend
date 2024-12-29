@@ -1,11 +1,14 @@
 import { SignIn, SignUp } from "@/pages/auth";
 import {
   AdmissionSubmission,
+  Attendance,
   Classes,
   Home,
   NewClass,
+  NewSection,
   NewStudent,
   Students,
+  ViewAttendance,
 } from "@/pages/dashboard";
 
 import {
@@ -46,9 +49,15 @@ export const routes = [
 
       {
         icon: <UserCircleIcon {...icon} />,
-        name: "Add New Class",
+        name: "Add Class",
         path: "/classes-new",
         element: <NewClass />,
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Add Section",
+        path: "/section-new",
+        element: <NewSection />,
       },
     ],
   },
@@ -68,6 +77,25 @@ export const routes = [
         name: "New Student",
         path: "/student-new",
         element: <NewStudent />,
+      },
+    ],
+  },
+  {
+    layout: "dashboard",
+    title: "Attendance",
+    isAccordion: true,
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Attendance",
+        path: "/attendance-new",
+        element: <Attendance />,
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "View Attendance",
+        path: "/attendance",
+        element: <ViewAttendance />,
       },
     ],
   },

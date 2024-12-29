@@ -5,4 +5,6 @@ export const initialStudentFormValues = {
   studentId: "",
   password: cryptoRandomString({ length: 6, type: "distinguishable" }),
   classId: "",
+  sectionId: "",
+  rollNumber: "",
 };

@@ -5,71 +5,106 @@ import {
   Select,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
+
 import { Controller } from "react-hook-form";
 import { useCreateClassMutation } from "../../../redux/api/classApi";
 import { useGetTeachersQuery } from "../../../redux/api/teacherApi";
+import { createPromiseToast } from "../../../utils/promiseToast";
+import FormValidationError from "../../Errors/FormValidationError";
 import useNewClassForm from "./useNewClassForm";
-
 const NewClassForm = () => {
   const { renderNewClassFormHookProps } = useNewClassForm();
 
-  const { register, handleSubmit, control, errors } =
-    renderNewClassFormHookProps;
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = renderNewClassFormHookProps;
   const [createClass] = useCreateClassMutation();
   const { data: teachers, isLoading: isTeachersLoading } =
     useGetTeachersQuery();
-  const submitHandler = (data) => {
+  console.log(errors);
+  const submitHandler = async (data) => {
     console.log(data);
+    const toast = createPromiseToast();
+    const { successToast, errorToast } = toast();
     try {
-      const res = createClass(data);
+      const res = await createClass(data).unwrap();
       console.log(res);
+      successToast({ message: "Class created successfully" });
     } catch (err) {
       console.log(err);
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
     }
   };
 
   return (
-    <div className="w-full">
-      <Typography variant="h3" color="blue-gray" className="mb-2 text-center">
-        New Class
+    <div className="w-full bg-white  p-8">
+      <Typography
+        variant="h3"
+        color="blue"
+        className="mb-4 text-center font-bold"
+      >
+        ✨ Create New Class
+      </Typography>
+      <Typography variant="small" color="gray" className="mb-8 text-center">
+        Fill out the details below to add a new class.
       </Typography>
       <form
-        className="mx-auto max-w-[24rem] text-left"
+        className="mx-auto max-w-[28rem] space-y-6"
         onSubmit={handleSubmit(submitHandler)}
       >
-        <div className="mb-6">
-          <div className="mb-6">
-            <Input label="Class Name" {...register("name")} />
-            {errors?.name && (
-              <span className="text-red-500">{errors.name.message}</span>
-            )}
-          </div>
+        {/* Class Name Input */}
+        <div className="space-y-1">
+          <Input
+            label="Class Name"
+            placeholder="e.g., Class 1"
+            {...register("name")}
+            className=""
+          />
+          {errors?.name && (
+            <FormValidationError errorMessage={errors?.name?.message} />
+          )}
         </div>
-        {!isTeachersLoading && (
-          <Controller
-            name="teacherId"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Select
-                label="Teacher"
-                className="mb-6"
-                variant="outlined"
-                value={value}
-                onChange={onChange}
-              >
-                {teachers?.map((teacher) => (
-                  <Option key={teacher.email} value={teacher._id}>
-                    {teacher.email}
-                  </Option>
-                ))}
-              </Select>
-            )}
-          ></Controller>
-        )}
 
-        <Button size="lg" className="mt-6" fullWidth type="submit">
-          Submit
+        {/* Teacher Select Dropdown */}
+        <div className="space-y-1">
+          {!isTeachersLoading ? (
+            <Controller
+              name="teacher"
+              control={control}
+              render={({ field: { onChange, value } }) => (
+                <Select
+                  label="Teacher"
+                  variant="outlined"
+                  className=""
+                  value={value}
+                  onChange={onChange}
+                >
+                  {teachers?.map((teacher) => (
+                    <Option key={teacher.email} value={teacher._id}>
+                      {teacher.name}
+                    </Option>
+                  ))}
+                </Select>
+              )}
+            />
+          ) : (
+            <div className="text-gray-500 text-sm">Loading teachers...</div>
+          )}
+          {errors?.teacher && (
+            <FormValidationError errorMessage={errors?.teacher?.message} />
+          )}
+        </div>
+
+        {/* Submit Button */}
+        <Button
+          size="lg"
+          className="w-full bg-blue-600 text-white py-3 rounded-lg shadow-lg hover:bg-blue-700 transition"
+          type="submit"
+        >
+          🚀 Submit
         </Button>
       </form>
     </div>

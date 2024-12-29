@@ -9,13 +9,17 @@ import { useState } from "react";
 import { Controller } from "react-hook-form";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
 import { MdErrorOutline } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { enablesignup } from "../../../configs/systemConfiguration";
 import { useRegisterUserMutation } from "../../../redux/api/authApi";
+import { createPromiseToast } from "../../../utils/promiseToast";
 import AlertMessage from "../../Alerts";
+import FormValidationError from "../../Errors/FormValidationError";
 import useSignUpFormHook from "./useSignUpFormHook";
 import { roles } from "./utils";
 const SignUpForm = () => {
   const [passwordShown, setPasswordShown] = useState(false);
+  const navigate = useNavigate();
   const togglePasswordVisiblity = () => setPasswordShown((cur) => !cur);
   const { renderSignUpFormHookProps } = useSignUpFormHook();
   const [registerUser] = useRegisterUserMutation();
@@ -25,12 +29,17 @@ const SignUpForm = () => {
     formState: { errors },
   } = renderSignUpFormHookProps;
 
+  console.log(errors);
   const submitHandler = async (data) => {
+    const toast = createPromiseToast();
+    const { successToast, errorToast } = toast();
     try {
-      const res = await registerUser(data);
-      console.log(res);
+      const res = await registerUser(data).unwrap();
+      console.log(res, "res");
+      successToast({ message: "Registration successful. Please login" });
+      navigate("/auth/sign-in");
     } catch (err) {
-      console.log(err);
+      errorToast({ message: err?.data?.message ?? "An error occurred" });
     }
   };
   return (
@@ -46,9 +55,15 @@ const SignUpForm = () => {
           Enter your email, password and role.
         </Typography>
         <div className="mb-6">
+          <Input label="Name" {...register("name")} />
+          {errors.name && (
+            <FormValidationError errorMessage={errors.name.message} />
+          )}
+        </div>
+        <div className="mb-6">
           <Input label="Email" {...register("email")} />
           {errors.email && (
-            <span className="text-red-500">{errors.email.message}</span>
+            <FormValidationError errorMessage={errors.email.message} />
           )}
         </div>
 
@@ -70,35 +85,48 @@ const SignUpForm = () => {
             }
           />
           {errors.password && (
-            <span className="text-red-500">{errors.password.message}</span>
+            <FormValidationError errorMessage={errors.password.message} />
           )}
         </div>
-        <Controller
-          name="role"
-          control={renderSignUpFormHookProps.control}
-          render={({ field: { onChange, value } }) => (
-            <Select
-              label="Role"
-              className="mb-6"
-              variant="outlined"
-              value={value}
-              onChange={onChange}
-            >
-              {roles.map((role) => (
-                <Option key={role.name} value={role.name}>
-                  {role.label}
-                </Option>
-              ))}
-            </Select>
+        <div className="mb-6">
+          <Controller
+            name="role"
+            control={renderSignUpFormHookProps.control}
+            render={({ field: { onChange, value } }) => (
+              <Select
+                label="Role"
+                className="mb-6"
+                variant="outlined"
+                value={value}
+                onChange={onChange}
+              >
+                {roles.map((role) => (
+                  <Option key={role.name} value={role.name}>
+                    {role.label}
+                  </Option>
+                ))}
+              </Select>
+            )}
+          />
+          {errors.role && (
+            <FormValidationError errorMessage={errors.role.message} />
           )}
-        ></Controller>
-        <AlertMessage
-          className="rounded flex mt-6 items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
-          icon={<MdErrorOutline />}
+        </div>
+        {!enablesignup && (
+          <AlertMessage
+            className="rounded flex mt-6 items-center  border-[#2ec946] bg-red-100 font-medium text-red-800"
+            icon={<MdErrorOutline />}
+          >
+            You can&apos;t sign up at this moment.
+          </AlertMessage>
+        )}
+        <Button
+          disabled={!enablesignup}
+          size="lg"
+          className="mt-6"
+          fullWidth
+          type="submit"
         >
-          You can&apos;t sign up at this moment.
-        </AlertMessage>
-        <Button disabled size="lg" className="mt-6" fullWidth type="submit">
           sign up
         </Button>
 
