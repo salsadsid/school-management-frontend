@@ -31,3 +31,7 @@ export const loginPageImage = {
   src: "assets/login_graphic.png",
   alt: "login-bg",
 };
+
+export const restrictedRoutes = [];
+
+export const enablesignup = true;

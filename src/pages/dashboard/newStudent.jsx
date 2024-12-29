@@ -1,27 +1,32 @@
-import { Alert } from "@material-tailwind/react";
+import { Card } from "@material-tailwind/react";
 import React from "react";
-import { RiAdminFill } from "react-icons/ri";
-
+import NewStudentForm from "../../components/Forms/NewStudentForm";
+import { useGetClassesQuery } from "../../redux/api/classApi";
+import { useGetSectionsQuery } from "../../redux/api/sectionApi";
 export const NewStudent = () => {
-  const [openAlert, setOpenAlert] = React.useState(true);
+  const {
+    data: classes,
+    isLoading: isClassesLoading,
+    error,
+  } = useGetClassesQuery();
+  const { data: sections, isLoading: isSectionsLoading } =
+    useGetSectionsQuery();
   return (
     <div>
       <div className="mx-auto min-h-[82vh] max-w-screen-xl px-4 md:px-12 md:py-12">
-        <Alert
-          open={openAlert}
-          color="amber"
-          onClose={() => setOpenAlert(true)}
-        >
-          <div className="flex items-center gap-4">
-            <RiAdminFill />
-            <p className="text-sm ">
-              You are not authorized to view this page.
-            </p>
-          </div>
-        </Alert>
-        {/* <Card className="overflow-hidden p-4 xl:col-span-2 border border-blue-gray-100 shadow-sm">
-          <NewStudentForm />
-        </Card> */}
+        <Card className="overflow-hidden p-4 xl:col-span-2 border border-blue-gray-100 shadow-sm">
+          {classes?.length > 0 && sections?.length > 0 ? (
+            <NewStudentForm classes={classes} sections={sections} />
+          ) : (
+            <div className="p-4 text-center font-bold text-2xl">
+              No Class or Section Found, Please create a class and section
+              first.
+            </div>
+          )}
+          {isClassesLoading && isSectionsLoading && (
+            <div className="p-4 text-center font-bold text-2xl">Loading...</div>
+          )}
+        </Card>
       </div>
     </div>
   );

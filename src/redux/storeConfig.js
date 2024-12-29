@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { apiSlice } from "./api";
+import attendanceReducer from "./slices/attendanceSlice";
 import authReducer from "./slices/authSlice";
 import storage from "./storage";
 
@@ -8,10 +9,11 @@ const PERSIST_CONFIG_KEY = "salman";
 export const reducers = combineReducers({
   [apiSlice.reducerPath]: apiSlice.reducer,
   auth: authReducer,
+  attendance: attendanceReducer,
 });
 
 export const persistConfig = {
   key: PERSIST_CONFIG_KEY,
-  whitelist: ["auth"],
+  whitelist: ["auth", "attendance"],
   storage,
 };

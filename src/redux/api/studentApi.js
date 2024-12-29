@@ -1,4 +1,5 @@
 import { apiSlice } from ".";
+import { generateQueryString } from "../../utils/generateQueryString";
 import { setToken } from "../slices/authSlice";
 
 export const studentApi = apiSlice.injectEndpoints({
@@ -11,7 +12,12 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
     }),
     getAllStudents: builder.query({
-      query: () => `/student`,
+      query: (args) => {
+        const { queryString } = generateQueryString({ queryObject: args });
+        return {
+          url: `student${queryString}`,
+        };
+      },
     }),
     loginStudent: builder.mutation({
       query: (body) => ({

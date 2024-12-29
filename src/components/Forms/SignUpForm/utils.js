@@ -1,7 +1,7 @@
 export const initialSignUpFormValues = {
   email: "",
   password: "",
-  role: "student",
+  role: "teacher",
 };
 
 export const roles = [
