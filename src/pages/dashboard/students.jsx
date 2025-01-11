@@ -30,6 +30,10 @@ export const Students = () => {
             <CardBody className="p-6">
               <Typography className="mb-4 text-gray-800">
                 <span className="font-semibold">Roll Number:</span>{" "}
+                {item.studentId ? item.studentId : "Not assigned"}
+              </Typography>
+              <Typography className="mb-4 text-gray-800">
+                <span className="font-semibold">Roll Number:</span>{" "}
                 {item.rollNumber ? item.rollNumber : "Not assigned"}
               </Typography>
 

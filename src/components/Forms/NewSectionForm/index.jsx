@@ -19,6 +19,7 @@ const NewSectionForm = ({ classes }) => {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { errors },
   } = renderNewSectionFormHookProps;
   const [createSection] = useCreateSectionMutation();
@@ -33,6 +34,7 @@ const NewSectionForm = ({ classes }) => {
       const res = await createSection(data).unwrap();
       console.log(res);
       successToast({ message: "Section created successfully" });
+      reset();
     } catch (err) {
       console.log(err);
       errorToast({ message: err?.data?.message ?? "An error occurred" });

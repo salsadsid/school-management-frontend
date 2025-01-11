@@ -100,10 +100,11 @@ export function DashboardNavbar() {
                       fill="#90A4AE"
                     />
                   </svg>
-
-                  <Typography variant="small" className="font-medium">
-                    My Profile
-                  </Typography>
+                  <Link to="/dashboard/profile">
+                    <Typography variant="small" className="font-medium">
+                      My Profile
+                    </Typography>
+                  </Link>
                 </MenuItem>
 
                 <hr className="my-2 border-blue-gray-50" />

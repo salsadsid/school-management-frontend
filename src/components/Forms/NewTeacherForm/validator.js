@@ -1,13 +1,12 @@
 import * as Yup from "yup";
 
-export const signUpSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+export const newTeacherSchema = Yup.object().shape({
+  name: Yup.string().required("Teacher name is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
-  role: Yup.string()
-    .required("Role is required")
-    .oneOf(["teacher", "moderator", "admin"])
-    .label("Role"),
   password: Yup.string()
     .min(4, "Password must be at least 4 characters")
     .required("Password is required"),
+  joiningDate: Yup.date()
+    .typeError("Expected a value of type ${type} but got: ${value}")
+    .optional(),
 });
