@@ -1,18 +1,15 @@
 import { Button, Typography } from "@material-tailwind/react";
 import React from "react";
 import { CiExport } from "react-icons/ci";
+import RenderData from "../../../components/RenderData";
 import { useGetAllAdmissionInfoQuery } from "../../../redux/api/admissionApi";
 import { DataTable } from "./DataTable/DataTable";
 import { columns } from "./DataTable/columns";
-import TableSkeleton from "./components/TableSkeleton";
 import { admissionDataJsonToCSV } from "./utils";
 
 export const AdmissionSubmission = () => {
-  const {
-    data: admissionInfo,
-    isLoading,
-    error,
-  } = useGetAllAdmissionInfoQuery();
+  const { data: admissionInfo, ...admissionInfoApiState } =
+    useGetAllAdmissionInfoQuery();
   const [downloadLoading, setDownloadLoading] = React.useState(false);
   const handleExportData = () => {
     setDownloadLoading(true);
@@ -39,20 +36,14 @@ export const AdmissionSubmission = () => {
           onClick={handleExportData}
           color="teal"
           loading={downloadLoading}
-          disabled={isLoading || !admissionInfo?.length || error} // disable button if there is no data
+          disabled={!admissionInfo?.length} // disable button if there is no data
         >
           <CiExport size={22} /> Export ALl
         </Button>
       </div>
-      {isLoading ? (
-        <TableSkeleton />
-      ) : admissionInfo?.length ? (
+      <RenderData data={admissionInfo} apiState={admissionInfoApiState}>
         <DataTable columns={columns} data={admissionInfo} />
-      ) : (
-        <Typography color="red" className="text-center">
-          No admission submission data found
-        </Typography>
-      )}
+      </RenderData>
     </div>
   );
 };

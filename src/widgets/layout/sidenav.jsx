@@ -14,6 +14,7 @@ import {
 } from "@material-tailwind/react";
 import PropTypes from "prop-types";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link, NavLink } from "react-router-dom";
 import {
   isSystem,
@@ -21,6 +22,7 @@ import {
 } from "../../configs/systemConfiguration";
 export function Sidenav({ brandImg, brandName, routes }) {
   const [controller, dispatch] = useMaterialTailwindController();
+  const { user_info } = useSelector((state) => state.auth);
   const { sidenavColor, sidenavType, openSidenav } = controller;
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-gray-800 to-gray-900",
@@ -33,6 +35,14 @@ export function Sidenav({ brandImg, brandName, routes }) {
   const handleOpen = (value) => {
     setOpen(open === value ? 0 : value);
   };
+  const filteredRoutes = routes
+    .map((section) => ({
+      ...section,
+      pages: section.pages.filter((page) =>
+        page.roles.includes(user_info.role)
+      ),
+    }))
+    .filter((section) => section.pages.length > 0);
   return (
     <aside
       className={`${sidenavTypes[sidenavType]} ${
@@ -61,7 +71,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
       </div>
       <div className="m-4">
         <List>
-          {routes
+          {filteredRoutes
             .filter(({ layout }) => layout !== "auth")
             .map(({ layout, title, pages, isAccordion }, key) => (
               <div key={key}>
@@ -93,34 +103,36 @@ export function Sidenav({ brandImg, brandName, routes }) {
                     </ListItem>
                     <AccordionBody className="py-1">
                       <ul>
-                        {pages.map(({ icon, name, path }) => (
-                          <li key={name}>
-                            <NavLink to={`/${layout}${path}`}>
-                              {({ isActive }) => (
-                                <Button
-                                  variant={isActive ? "gradient" : "text"}
-                                  color={
-                                    isActive
-                                      ? sidenavColor
-                                      : sidenavType === "dark"
-                                      ? "white"
-                                      : "blue-gray"
-                                  }
-                                  className="flex items-center gap-4 px-4 capitalize"
-                                  fullWidth
-                                >
-                                  {icon}
-                                  <Typography
-                                    color="inherit"
-                                    className="font-medium text-sm capitalize"
+                        {pages
+                          .filter(({ hidden }) => !hidden)
+                          .map(({ icon, name, path }) => (
+                            <li key={name}>
+                              <NavLink to={`/${layout}${path}`}>
+                                {({ isActive }) => (
+                                  <Button
+                                    variant={isActive ? "gradient" : "text"}
+                                    color={
+                                      isActive
+                                        ? sidenavColor
+                                        : sidenavType === "dark"
+                                        ? "white"
+                                        : "blue-gray"
+                                    }
+                                    className="flex items-center gap-4 px-4 capitalize"
+                                    fullWidth
                                   >
-                                    {name}
-                                  </Typography>
-                                </Button>
-                              )}
-                            </NavLink>
-                          </li>
-                        ))}
+                                    {icon}
+                                    <Typography
+                                      color="inherit"
+                                      className="font-medium text-sm capitalize"
+                                    >
+                                      {name}
+                                    </Typography>
+                                  </Button>
+                                )}
+                              </NavLink>
+                            </li>
+                          ))}
                       </ul>
                     </AccordionBody>
                   </Accordion>
@@ -137,34 +149,36 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         </Typography>
                       </li>
                     )}
-                    {pages.map(({ icon, name, path }) => (
-                      <li key={name}>
-                        <NavLink to={`/${layout}${path}`}>
-                          {({ isActive }) => (
-                            <Button
-                              variant={isActive ? "gradient" : "text"}
-                              color={
-                                isActive
-                                  ? sidenavColor
-                                  : sidenavType === "dark"
-                                  ? "white"
-                                  : "blue-gray"
-                              }
-                              className="flex items-center gap-4 px-4 capitalize"
-                              fullWidth
-                            >
-                              {icon}
-                              <Typography
-                                color="inherit"
-                                className="font-medium capitalize"
+                    {pages
+                      .filter(({ hidden }) => !hidden)
+                      .map(({ icon, name, path }) => (
+                        <li key={name}>
+                          <NavLink to={`/${layout}${path}`}>
+                            {({ isActive }) => (
+                              <Button
+                                variant={isActive ? "gradient" : "text"}
+                                color={
+                                  isActive
+                                    ? sidenavColor
+                                    : sidenavType === "dark"
+                                    ? "white"
+                                    : "blue-gray"
+                                }
+                                className="flex items-center gap-4 px-4 capitalize"
+                                fullWidth
                               >
-                                {name}
-                              </Typography>
-                            </Button>
-                          )}
-                        </NavLink>
-                      </li>
-                    ))}
+                                {icon}
+                                <Typography
+                                  color="inherit"
+                                  className="font-medium capitalize"
+                                >
+                                  {name}
+                                </Typography>
+                              </Button>
+                            )}
+                          </NavLink>
+                        </li>
+                      ))}
                   </ul>
                 )}
               </div>

@@ -1,16 +1,18 @@
 import { SignIn, SignUp } from "@/pages/auth";
 import {
+  AddTeacher,
   AdmissionSubmission,
+  AllTeachers,
   Attendance,
   Classes,
   Home,
+  MyProfile,
   NewClass,
   NewSection,
   NewStudent,
   Students,
   ViewAttendance,
 } from "@/pages/dashboard";
-
 import {
   HomeIcon,
   RectangleStackIcon,
@@ -31,10 +33,39 @@ export const routes = [
         name: "Dashboard",
         path: "/",
         element: <Home />,
+        roles: ["admin", "moderator", "teacher", "student"], // Accessible by all
+      },
+      {
+        icon: <RectangleStackIcon {...icon} />,
+        name: "My Profile",
+        path: "/profile",
+        element: <MyProfile />,
+        roles: ["admin", "moderator", "teacher", "student"], // Accessible by all
+        hidden: true,
       },
     ],
   },
-
+  {
+    layout: "dashboard",
+    title: "Teacher Management",
+    isAccordion: true,
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "All Teachers",
+        path: "/teachers",
+        element: <AllTeachers />,
+        roles: ["admin", "moderator"],
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Add Teacher",
+        path: "/teachers-new",
+        element: <AddTeacher />,
+        roles: ["admin", "moderator"],
+      },
+    ],
+  },
   {
     layout: "dashboard",
     title: "Class Management",
@@ -45,22 +76,25 @@ export const routes = [
         name: "All Classes",
         path: "/classes",
         element: <Classes />,
+        roles: ["admin", "moderator"],
       },
-
       {
         icon: <UserCircleIcon {...icon} />,
         name: "Add Class",
         path: "/classes-new",
         element: <NewClass />,
+        roles: ["admin", "moderator"],
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "Add Section",
         path: "/section-new",
         element: <NewSection />,
+        roles: ["admin", "moderator"],
       },
     ],
   },
+
   {
     layout: "dashboard",
     title: "Students Management",
@@ -71,74 +105,68 @@ export const routes = [
         name: "All Students",
         path: "/students",
         element: <Students />,
+        roles: ["admin", "moderator"],
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "New Student",
         path: "/student-new",
         element: <NewStudent />,
+        roles: ["admin", "moderator"],
       },
     ],
   },
   {
     layout: "dashboard",
-    title: "Attendance",
+    title: "Admission Management",
     isAccordion: true,
     pages: [
       {
         icon: <UserCircleIcon {...icon} />,
-        name: "Attendance",
-        path: "/attendance-new",
-        element: <Attendance />,
-      },
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "View Attendance",
-        path: "/attendance",
-        element: <ViewAttendance />,
-      },
-    ],
-  },
-  {
-    layout: "dashboard",
-    title: "Admission",
-    isAccordion: true,
-    pages: [
-      {
-        icon: <UserCircleIcon {...icon} />,
-        name: "Form Submissions",
-        path: "/form-submissions",
+        name: "All Applications",
+        path: "/applications",
         element: <AdmissionSubmission />,
+        roles: ["admin", "moderator"],
       },
     ],
   },
 
   {
     layout: "dashboard",
-    title: "Exam Management",
+    title: "Attendance Management",
     isAccordion: true,
-    pages: [],
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Attendance",
+        path: "/attendance",
+        element: <Attendance />,
+        roles: ["admin", "moderator"],
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "View Attendance",
+        path: "/view-attendance",
+        element: <ViewAttendance />,
+        roles: ["admin", "moderator"],
+      },
+    ],
   },
+];
+
+export const baseRoutes = [
   {
-    layout: "dashboard",
-    title: "Fee Management",
-    isAccordion: true,
-    pages: [],
-  },
-  {
-    title: "auth pages",
     layout: "auth",
-    visiable: false,
     pages: [
       {
         icon: <ServerStackIcon {...icon} />,
-        name: "sign in",
+        name: "Sign In",
         path: "/sign-in",
         element: <SignIn />,
       },
       {
         icon: <RectangleStackIcon {...icon} />,
-        name: "sign up",
+        name: "Sign Up",
         path: "/sign-up",
         element: <SignUp />,
       },

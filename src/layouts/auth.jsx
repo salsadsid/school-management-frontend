@@ -1,11 +1,11 @@
-import routes from "@/routes";
 import { Route, Routes } from "react-router-dom";
+import { baseRoutes } from "../routes";
 
 export function Auth() {
   return (
     <div className="relative">
       <Routes>
-        {routes.map(
+        {baseRoutes.map(
           ({ layout, pages }) =>
             layout === "auth" &&
             pages.map(({ path, element }) => (

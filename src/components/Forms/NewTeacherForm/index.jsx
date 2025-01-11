@@ -1,18 +1,11 @@
-import {
-  Button,
-  Input,
-  Option,
-  Select,
-  Typography,
-} from "@material-tailwind/react";
+import { Button, Input, Typography } from "@material-tailwind/react";
 
-import { Controller } from "react-hook-form";
-import { useCreateClassMutation } from "../../../redux/api/classApi";
+import { useCreateUserAndTeacherMutation } from "../../../redux/api/teacherApi";
 import { createPromiseToast } from "../../../utils/promiseToast";
 import FormValidationError from "../../Errors/FormValidationError";
-import useNewClassForm from "./useNewClassForm";
-const NewClassForm = ({ teachers }) => {
-  const { renderNewClassFormHookProps } = useNewClassForm();
+import useNewTeacherForm from "./useNewClassForm";
+const NewTeacherForm = () => {
+  const { renderNewTeacherFormHookProps } = useNewTeacherForm();
 
   const {
     register,
@@ -20,18 +13,17 @@ const NewClassForm = ({ teachers }) => {
     control,
     reset,
     formState: { errors },
-  } = renderNewClassFormHookProps;
-  const [createClass] = useCreateClassMutation();
-
+  } = renderNewTeacherFormHookProps;
+  const [createUserAndTeacher] = useCreateUserAndTeacherMutation();
   console.log(errors);
   const submitHandler = async (data) => {
     console.log(data);
     const toast = createPromiseToast();
     const { successToast, errorToast } = toast();
     try {
-      const res = await createClass(data).unwrap();
+      const res = await createUserAndTeacher(data).unwrap();
       console.log(res);
-      successToast({ message: "Class created successfully" });
+      successToast({ message: "Teacher added successfully" });
       reset();
     } catch (err) {
       console.log(err);
@@ -46,10 +38,10 @@ const NewClassForm = ({ teachers }) => {
         color="blue"
         className="mb-4 text-center font-bold"
       >
-        ✨ Create New Class
+        ✨ Add Teacher
       </Typography>
       <Typography variant="small" color="gray" className="mb-8 text-center">
-        Fill out the details below to add a new class.
+        Fill out the details below to add a new teacher.
       </Typography>
       <form
         className="mx-auto max-w-[28rem] space-y-6"
@@ -58,8 +50,8 @@ const NewClassForm = ({ teachers }) => {
         {/* Class Name Input */}
         <div className="space-y-1">
           <Input
-            label="Class Name"
-            placeholder="e.g., Class 1"
+            label="Teacher Name"
+            placeholder="e.g., John Doe"
             {...register("name")}
             className=""
           />
@@ -70,31 +62,32 @@ const NewClassForm = ({ teachers }) => {
 
         {/* Teacher Select Dropdown */}
         <div className="space-y-1">
-          {teachers?.length > 0 ? (
-            <Controller
-              name="teacher"
-              control={control}
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  label="Teacher"
-                  variant="outlined"
-                  className=""
-                  value={value}
-                  onChange={onChange}
-                >
-                  {teachers?.map((teacher) => (
-                    <Option key={teacher.email} value={teacher._id}>
-                      {teacher.name}
-                    </Option>
-                  ))}
-                </Select>
-              )}
-            />
-          ) : (
-            <div className="text-gray-500 text-sm">Loading teachers...</div>
+          <Input
+            label="Email"
+            placeholder="e.g., john.doe@gmail.com"
+            {...register("email")}
+            className=""
+          />
+          {errors?.email && (
+            <FormValidationError errorMessage={errors?.email?.message} />
           )}
-          {errors?.teacher && (
-            <FormValidationError errorMessage={errors?.teacher?.message} />
+        </div>
+        <div>
+          <Input label="Password" type="text" {...register("password")} />
+          {errors?.password && (
+            <FormValidationError errorMessage={errors.password.message} />
+          )}
+        </div>
+        <div className="space-y-1">
+          <Input
+            label="Joining Date"
+            placeholder="e.g., john.doe@gmail.com"
+            {...register("joiningDate")}
+            className=""
+            type="date"
+          />
+          {errors?.joiningDate && (
+            <FormValidationError errorMessage={errors?.joiningDate?.message} />
           )}
         </div>
 
@@ -111,4 +104,4 @@ const NewClassForm = ({ teachers }) => {
   );
 };
 
-export default NewClassForm;
+export default NewTeacherForm;
