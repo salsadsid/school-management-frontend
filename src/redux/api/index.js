@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { logout } from "../slices/authSlice";
 const baseQuery = fetchBaseQuery({
   baseUrl:
     import.meta.env.VITE_NODE_ENV === "development"
@@ -14,9 +15,29 @@ const baseQuery = fetchBaseQuery({
   },
 });
 
+const baseQueryWithAuthHandling = async (args, api, extraOptions) => {
+  const result = await baseQuery(args, api, extraOptions);
+  console.log(result);
+  if (
+    result.error?.status === 401 &&
+    result.error?.data?.message === "Invalid token"
+  ) {
+    // Clear local storage
+    localStorage.removeItem("authToken");
+
+    // Dispatch logout action if using Redux auth state
+    api.dispatch(logout());
+
+    // // Navigate to login page
+    // navigate("/login");
+  }
+
+  return result;
+};
+
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithAuthHandling,
   tagTypes: [
     "getAllAdmissionInfo",
     "getAnAdmissionInfo",
