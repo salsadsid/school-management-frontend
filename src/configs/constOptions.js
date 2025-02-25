@@ -76,3 +76,11 @@ export const groups = [
     label: "Humanities",
   },
 ];
+
+export const renames = {
+  studentId: "Student ID",
+  name: "Name",
+  rollNumber: "Roll Number",
+  classId_name: "Class",
+  section_name: "Section",
+};

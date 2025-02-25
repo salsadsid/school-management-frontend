@@ -7,4 +7,6 @@ export const initialStudentFormValues = {
   classId: "",
   sectionId: "",
   rollNumber: "",
+  phoneNumber1: "",
+  phoneNumber2: "",
 };

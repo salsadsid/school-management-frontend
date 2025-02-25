@@ -3,12 +3,15 @@ import { useForm } from "react-hook-form";
 import { initialStudentFormValues } from "./utils";
 import { newStudentSchema } from "./validator";
 
-const useNewStudentForm = () => {
+const useNewStudentForm = (isEditMode) => {
   const renderNewStudentFormHookProps = useForm({
-    defaultValues: initialStudentFormValues,
+    defaultValues: {
+      ...initialStudentFormValues,
+      password: isEditMode ? "" : initialStudentFormValues.password,
+    },
     mode: "onBlur",
     reValidateMode: "onBlur",
-    resolver: yupResolver(newStudentSchema),
+    resolver: yupResolver(newStudentSchema(isEditMode)),
   });
 
   return {
