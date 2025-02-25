@@ -8,7 +8,6 @@ import {
 
 import { Controller } from "react-hook-form";
 import { useCreateSectionMutation } from "../../../redux/api/sectionApi";
-import { useGetTeachersQuery } from "../../../redux/api/teacherApi";
 import { createPromiseToast } from "../../../utils/promiseToast";
 import FormValidationError from "../../Errors/FormValidationError";
 import useNewSectionForm from "./useNewSectionForm";
@@ -23,8 +22,7 @@ const NewSectionForm = ({ classes }) => {
     formState: { errors },
   } = renderNewSectionFormHookProps;
   const [createSection] = useCreateSectionMutation();
-  const { data: teachers, isLoading: isTeachersLoading } =
-    useGetTeachersQuery();
+
   console.log(errors);
   const submitHandler = async (data) => {
     console.log(data);
@@ -65,7 +63,6 @@ const NewSectionForm = ({ classes }) => {
               <FormValidationError errorMessage={errors?.name?.message} />
             )}
           </div>
-
           {/* Class Dropdown */}
           <div className="space-y-1">
             {classes.length > 0 && (
@@ -87,29 +84,6 @@ const NewSectionForm = ({ classes }) => {
               <FormValidationError errorMessage={errors?.class?.message} />
             )}
           </div>
-
-          {/* Teacher Dropdown */}
-          <div className="space-y-1">
-            {!isTeachersLoading && teachers.length > 0 && (
-              <Controller
-                name="teacher"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select label="Teacher" value={value} onChange={onChange}>
-                    {teachers?.map((teacher) => (
-                      <Option key={teacher.email} value={teacher._id}>
-                        {teacher.name}
-                      </Option>
-                    ))}
-                  </Select>
-                )}
-              />
-            )}
-            {errors?.teacher && (
-              <FormValidationError errorMessage={errors?.teacher?.message} />
-            )}
-          </div>
-
           {/* Submit Button */}
           <Button
             size="lg"

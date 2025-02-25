@@ -42,6 +42,11 @@ export const apiSlice = createApi({
     "getAllAdmissionInfo",
     "getAnAdmissionInfo",
     "updateAnAdmissionInfo",
+    "getAllStudents",
+    "getStudent",
+    "createStudent",
+    "updateStudent",
+    "deleteStudent",
   ],
   endpoints: () => ({}),
 });
