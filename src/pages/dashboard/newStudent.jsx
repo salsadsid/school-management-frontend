@@ -15,7 +15,7 @@ export const NewStudent = () => {
     <div>
       <div className="mx-auto min-h-[82vh] max-w-screen-xl px-4 md:px-12 md:py-12">
         <Card className="overflow-hidden p-4 xl:col-span-2 border border-blue-gray-100 shadow-sm">
-          {classes?.length > 0 && sections?.length > 0 ? (
+          {classes?.length > 0 ? (
             <NewStudentForm classes={classes} sections={sections} />
           ) : (
             <div className="p-4 text-center font-bold text-2xl">
