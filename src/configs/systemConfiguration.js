@@ -34,4 +34,4 @@ export const loginPageImage = {
 
 export const restrictedRoutes = [];
 
-export const enablesignup = false;
+export const enablesignup = true;
