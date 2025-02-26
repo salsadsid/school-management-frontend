@@ -27,18 +27,6 @@ export const studentColumns = [
     ),
   },
   {
-    accessorKey: "rollNumber",
-    header: ({ column }) => (
-      <button
-        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Roll
-        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
-      </button>
-    ),
-  },
-  {
     accessorKey: "classId.name",
     header: ({ column }) => (
       <button
