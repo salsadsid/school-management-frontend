@@ -48,7 +48,6 @@ const NewStudentForm = ({ classes, sections }) => {
       reset({
         name: studentData.name,
         studentId: studentData.studentId,
-        rollNumber: studentData.rollNumber,
         classId: studentData.classId,
         phoneNumber1: studentData.phoneNumber1,
         phoneNumber2: studentData.phoneNumber2,
@@ -70,7 +69,6 @@ const NewStudentForm = ({ classes, sections }) => {
             name: data.name,
             studentId: data.studentId,
             classId: data.classId,
-            rollNumber: data.rollNumber,
             phoneNumber1: data.phoneNumber1,
             phoneNumber2: data.phoneNumber2,
           },
@@ -83,7 +81,6 @@ const NewStudentForm = ({ classes, sections }) => {
           studentId: data.studentId,
           password: data.password,
           classId: data.classId,
-          rollNumber: data.rollNumber,
           phoneNumber1: data.phoneNumber1,
           phoneNumber2: data.phoneNumber2,
         }).unwrap();
@@ -134,12 +131,6 @@ const NewStudentForm = ({ classes, sections }) => {
           </div>
 
           {/* Roll Number */}
-          <div>
-            <Input label="Roll Number" {...register("rollNumber")} />
-            {errors?.rollNumber && (
-              <FormValidationError errorMessage={errors.rollNumber.message} />
-            )}
-          </div>
 
           {/* Class Dropdown */}
           <div>

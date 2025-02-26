@@ -10,7 +10,6 @@ export const newStudentSchema = (isEditMode) =>
           .min(4, "Password must be at least 4 characters")
           .required("Password is required"),
     classId: Yup.string().required("Class is required").label("Class"),
-    rollNumber: Yup.string().required("Roll Number is required"),
     phoneNumber1: Yup.string().required("Phone Number is required"),
     phoneNumber2: Yup.string().optional(),
   });
