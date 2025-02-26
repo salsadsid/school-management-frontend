@@ -5,7 +5,6 @@ export const initialNewTeacherFormValues = {
   //   description: "",
   email: "",
   password: cryptoRandomString({ length: 6, type: "distinguishable" }),
-  joiningDate: Date.now(),
   // classCode: "",
   // maxCapacity: "",
 };

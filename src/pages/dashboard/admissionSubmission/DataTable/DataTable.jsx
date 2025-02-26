@@ -69,7 +69,7 @@ export function DataTable({
             <div className="flex items-center gap-4">
               {table.getHeaderGroups().map((headerGroup) =>
                 headerGroup.headers
-                  .filter((header, i) => i < 5)
+                  .filter((header, i) => i < 4)
                   .map((header) =>
                     header.column.getCanFilter() ? (
                       <div key={header.id} className="flex flex-col space-y-1">

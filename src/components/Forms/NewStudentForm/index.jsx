@@ -50,7 +50,6 @@ const NewStudentForm = ({ classes, sections }) => {
         studentId: studentData.studentId,
         rollNumber: studentData.rollNumber,
         classId: studentData.classId,
-        sectionId: studentData.section,
         phoneNumber1: studentData.phoneNumber1,
         phoneNumber2: studentData.phoneNumber2,
         // Password optional in update
@@ -71,7 +70,6 @@ const NewStudentForm = ({ classes, sections }) => {
             name: data.name,
             studentId: data.studentId,
             classId: data.classId,
-            section: data.sectionId,
             rollNumber: data.rollNumber,
             phoneNumber1: data.phoneNumber1,
             phoneNumber2: data.phoneNumber2,
@@ -85,7 +83,6 @@ const NewStudentForm = ({ classes, sections }) => {
           studentId: data.studentId,
           password: data.password,
           classId: data.classId,
-          section: data.sectionId,
           rollNumber: data.rollNumber,
           phoneNumber1: data.phoneNumber1,
           phoneNumber2: data.phoneNumber2,
@@ -163,28 +160,6 @@ const NewStudentForm = ({ classes, sections }) => {
             )}
             {errors?.classId && (
               <FormValidationError errorMessage={errors.classId.message} />
-            )}
-          </div>
-
-          {/* Section Dropdown */}
-          <div>
-            {sections.length > 0 && (
-              <Controller
-                name="sectionId"
-                control={control}
-                render={({ field: { onChange, value } }) => (
-                  <Select label="Section" value={value} onChange={onChange}>
-                    {sections?.map((cls) => (
-                      <Option key={cls._id} value={cls._id}>
-                        {cls.name}
-                      </Option>
-                    ))}
-                  </Select>
-                )}
-              />
-            )}
-            {errors?.sectionId && (
-              <FormValidationError errorMessage={errors.sectionId.message} />
             )}
           </div>
 
