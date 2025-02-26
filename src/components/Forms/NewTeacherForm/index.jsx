@@ -78,18 +78,6 @@ const NewTeacherForm = () => {
             <FormValidationError errorMessage={errors.password.message} />
           )}
         </div>
-        <div className="space-y-1">
-          <Input
-            label="Joining Date"
-            placeholder="e.g., john.doe@gmail.com"
-            {...register("joiningDate")}
-            className=""
-            type="date"
-          />
-          {errors?.joiningDate && (
-            <FormValidationError errorMessage={errors?.joiningDate?.message} />
-          )}
-        </div>
 
         {/* Submit Button */}
         <Button

@@ -6,7 +6,4 @@ export const newTeacherSchema = Yup.object().shape({
   password: Yup.string()
     .min(4, "Password must be at least 4 characters")
     .required("Password is required"),
-  joiningDate: Yup.date()
-    .typeError("Expected a value of type ${type} but got: ${value}")
-    .optional(),
 });

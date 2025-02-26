@@ -16,7 +16,14 @@ export const AllTeachers = () => {
         </Typography>
       </div>
       <RenderData data={teachers} apiState={teachersApiState}>
-        {teachers && <DataTable columns={teacherColumns} data={teachers} />}
+        {teachers && (
+          <DataTable
+            gFilter={true}
+            cFilter={false}
+            columns={teacherColumns}
+            data={teachers}
+          />
+        )}
       </RenderData>
     </div>
   );
