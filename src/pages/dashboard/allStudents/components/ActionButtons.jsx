@@ -16,7 +16,7 @@ export const ActionButtons = ({ student }) => {
     const { successToast, errorToast, loadingToast } = toast();
     loadingToast({ message: "Deleting student..." });
     try {
-      const res = await deleteStudent({ id: student._id }).unwrap();
+      const res = await deleteStudent({ id: student.studentId }).unwrap();
       successToast({ message: res.message });
     } catch (error) {
       errorToast({ message: error.data.message });
