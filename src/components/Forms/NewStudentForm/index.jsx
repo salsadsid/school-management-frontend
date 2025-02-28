@@ -19,7 +19,7 @@ import FormValidationError from "../../Errors/FormValidationError";
 import useNewStudentForm from "./useNewStudentForm";
 // Updated NewStudentForm component
 const NewStudentForm = ({ classes, sections }) => {
-  const { readQueryParam } = useManageQueryParams();
+  const { readQueryParam, deleteQueryParam } = useManageQueryParams();
   const studentId = readQueryParam("studentId");
   const navigate = useNavigate();
   const isEditMode = !!studentId;
@@ -74,6 +74,9 @@ const NewStudentForm = ({ classes, sections }) => {
           },
         }).unwrap();
         successToast({ message: "Student updated successfully" });
+        navigate("/dashboard/student-new"); // Redirect after success
+        deleteQueryParam("studentId");
+        reset(); // Clear form after success
       } else {
         loadingToast({ message: "Adding student ..." });
         await createStudent({
@@ -85,7 +88,10 @@ const NewStudentForm = ({ classes, sections }) => {
           phoneNumber2: data.phoneNumber2,
         }).unwrap();
         successToast({ message: "Student added successfully" });
+        reset(); // Clear form after success
       }
+
+      reset(); // Clear form after success
       // navigate("/students"); // Redirect after success
     } catch (err) {
       errorToast({ message: err?.data?.message ?? "An error occurred" });
