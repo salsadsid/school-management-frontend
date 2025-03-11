@@ -54,21 +54,6 @@ export const teacherColumns = [
     ),
   },
   {
-    accessorKey: "joiningDate",
-    header: ({ column }) => (
-      <button
-        className="outline-none  rounded px-2 py-1 hover:bg-gray-100 font-normal text-sm"
-        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-      >
-        Joining Date
-        <ArrowsUpDownIcon className="ml-2 h-4 w-4 inline" />
-      </button>
-    ),
-    cell: ({ row }) => {
-      return <p>{row.original["joiningDate"].split("T")[0]}</p>;
-    },
-  },
-  {
     accessorKey: "Action",
     header: ({ column }) => (
       <button
