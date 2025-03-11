@@ -8,7 +8,7 @@ changeSystem(false);
 const homeHeroDetailsData = homeHeroDetails("H. A. K. ACADEMY");
 export function Home() {
   useEffect(() => {
-    fetch("http://173.249.28.63/jwt-api-token-auth/", {
+    fetch("/api/jwt-api-token-auth/", {
       // mode: "no-cors",
       method: "POST",
       headers: {
