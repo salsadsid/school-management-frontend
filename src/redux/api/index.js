@@ -23,7 +23,6 @@ const baseQueryWithAuthHandling = async (args, api, extraOptions) => {
     result.error?.data?.message === "Invalid token"
   ) {
     // Clear local storage
-    localStorage.removeItem("authToken");
 
     // Dispatch logout action if using Redux auth state
     api.dispatch(logout());

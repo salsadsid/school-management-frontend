@@ -10,13 +10,4 @@ export default defineConfig({
   build: {
     outDir: "dist",
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://173.249.28.63", // Change this to your actual API URL
-        changeOrigin: true,
-        secure: false,
-      },
-    },
-  },
 });
