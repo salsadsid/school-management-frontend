@@ -10,6 +10,7 @@ import {
   NewClass,
   NewSection,
   NewStudent,
+  SMSPanel,
   Students,
   ViewAttendance,
 } from "@/pages/dashboard";
@@ -149,6 +150,13 @@ export const routes = [
         path: "/view-attendance",
         element: <ViewAttendance />,
         roles: ["admin", "moderator"],
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "SMS Panel",
+        path: "/sms-panel",
+        element: <SMSPanel />,
+        roles: ["admin"],
       },
     ],
   },

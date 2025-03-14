@@ -39,6 +39,12 @@ export const studentApi = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["getStudent", "getAllStudents"],
     }),
+    getStudentsPhoneNumbers: builder.query({
+      query: ({ startTime, endTime }) => ({
+        url: "student/phones",
+        params: { start_time: startTime, end_time: endTime },
+      }),
+    }),
   }),
 });
 
@@ -48,4 +54,5 @@ export const {
   useGetStudentQuery,
   useUpdateStudentMutation,
   useDeleteStudentMutation,
+  useGetStudentsPhoneNumbersQuery,
 } = studentApi;
