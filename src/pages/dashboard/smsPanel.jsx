@@ -38,7 +38,7 @@ export const SMSPanel = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(API_BASE_URL + "sms/transactions", {
+      const response = await axios.get(API_BASE_URL + "/sms/transactions", {
         params: {
           start_time: formatDate(startTime),
           end_time: formatDate(endTime),
@@ -57,7 +57,7 @@ export const SMSPanel = () => {
   // Individual SMS handler
   const sendIndividualSMS = async (transactionId) => {
     try {
-      await axios.post(API_BASE_URL, +"sms/send-single", {
+      await axios.post(API_BASE_URL, +"/sms/send-single", {
         transactionId,
       });
       setTransactions(
@@ -74,7 +74,7 @@ export const SMSPanel = () => {
   // Bulk SMS handler
   const sendBulkSMS = async () => {
     try {
-      await axios.post(API_BASE_URL + "sms/send-bulk", {
+      await axios.post(API_BASE_URL + "/sms/send-bulk", {
         transactionIds: transactions.map((t) => t.transactionId),
       });
       setTransactions(transactions.map((t) => ({ ...t, processed: true })));
@@ -87,7 +87,7 @@ export const SMSPanel = () => {
   // Test SMS handler
   const sendTestSMS = async () => {
     try {
-      const response = await axios.post(API_BASE_URL + "sms/test", {
+      const response = await axios.post(API_BASE_URL + "/sms/test", {
         number: testNumber,
         message: testMessage,
       });
