@@ -11,6 +11,11 @@ import {
 import axios from "axios";
 import { useState } from "react";
 
+const API_BASE_URL =
+  import.meta.env.VITE_NODE_ENV === "development"
+    ? import.meta.env.VITE_NODE_ENV_DEVELOPMENT
+    : import.meta.env.VITE_NODE_ENV_PRODUCTION;
+
 export const SMSPanel = () => {
   const [transactions, setTransactions] = useState([]);
   const [startTime, setStartTime] = useState("");
@@ -33,16 +38,13 @@ export const SMSPanel = () => {
   const fetchTransactions = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:3000/api/v1/sms/transactions",
-        {
-          params: {
-            start_time: formatDate(startTime),
-            end_time: formatDate(endTime),
-            page_size: pageSize,
-          },
-        }
-      );
+      const response = await axios.get(API_BASE_URL + "sms/transactions", {
+        params: {
+          start_time: formatDate(startTime),
+          end_time: formatDate(endTime),
+          page_size: pageSize,
+        },
+      });
       setTransactions(response.data);
       setError("");
     } catch (err) {
@@ -55,7 +57,7 @@ export const SMSPanel = () => {
   // Individual SMS handler
   const sendIndividualSMS = async (transactionId) => {
     try {
-      await axios.post("http://localhost:3000/api/v1/sms/send-single", {
+      await axios.post(API_BASE_URL, +"sms/send-single", {
         transactionId,
       });
       setTransactions(
@@ -72,7 +74,7 @@ export const SMSPanel = () => {
   // Bulk SMS handler
   const sendBulkSMS = async () => {
     try {
-      await axios.post("http://localhost:3000/api/v1/sms/send-bulk", {
+      await axios.post(API_BASE_URL + "sms/send-bulk", {
         transactionIds: transactions.map((t) => t.transactionId),
       });
       setTransactions(transactions.map((t) => ({ ...t, processed: true })));
@@ -85,11 +87,11 @@ export const SMSPanel = () => {
   // Test SMS handler
   const sendTestSMS = async () => {
     try {
-      await axios.post("http://localhost:3000/api/v1/sms/test", {
+      const response = await axios.post(API_BASE_URL + "sms/test", {
         number: testNumber,
         message: testMessage,
       });
-      setSuccess("Test SMS sent successfully!");
+      setSuccess(response.response.responseResult);
       setTestNumber("");
       setTestMessage("");
     } catch (err) {
@@ -155,52 +157,77 @@ export const SMSPanel = () => {
             {error}
           </Alert>
         )}
+        {success && (
+          <Alert color="green" className="mb-4" onClose={() => setSuccess("")}>
+            {success}
+          </Alert>
+        )}
         {/* Transactions Table */}
         <div className="overflow-x-auto">
-          <table className="min-w-max">
-            <thead>
-              <tr>
-                <th>Student Name</th>
-                <th>Student ID</th>
-                <th>Punch Time</th>
-
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {transactions.map((transaction) => (
-                <tr key={transaction.transactionId}>
-                  <td>{transaction.empCode}</td>
-                  <td>{formatDate(transaction.punchTime)}</td>
-                  <td>{transaction.rawData.verify_type_display}</td>
-                  <td>
-                    <span
-                      className={`badge ${
-                        transaction.processed
-                          ? "bg-green-100 text-green-800"
-                          : "bg-blue-100 text-blue-800"
-                      } px-3 py-1 rounded-full`}
-                    >
-                      {transaction.processed ? "Sent" : "Pending"}
-                    </span>
-                  </td>
-                  <td>
-                    <Button
-                      size="sm"
-                      color={transaction.processed ? "gray" : "blue"}
-                      disabled={transaction.processed}
-                      onClick={() =>
-                        sendIndividualSMS(transaction.transactionId)
-                      }
-                    >
-                      {transaction.processed ? "Sent ✓" : "Send SMS"}
-                    </Button>
-                  </td>
+          <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md">
+            <table className="min-w-max w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Student Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Student ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Punch Time
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                  </th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {transactions.map((transaction) => (
+                  <tr key={transaction.transactionId}>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaction.empCode}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {formatDate(transaction.punchTime)}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {transaction.rawData.verify_type_display}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <span
+                        className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                          transaction.processed
+                            ? "bg-green-100 text-green-800"
+                            : "bg-blue-100 text-blue-800"
+                        }`}
+                      >
+                        {transaction.processed ? "Sent" : "Pending"}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <button
+                        className={`px-4 py-2 text-xs rounded-md font-medium ${
+                          transaction.processed
+                            ? "bg-gray-200 text-gray-600 cursor-not-allowed"
+                            : "bg-blue-500 text-white hover:bg-blue-600"
+                        } transition-colors duration-200`}
+                        disabled={transaction.processed}
+                        onClick={() =>
+                          sendIndividualSMS(transaction.transactionId)
+                        }
+                      >
+                        {transaction.processed ? "Sent ✓" : "Send SMS"}
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
         {/* Bulk Actions */}
