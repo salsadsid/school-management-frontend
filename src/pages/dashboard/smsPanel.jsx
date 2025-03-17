@@ -84,6 +84,15 @@ export const SMSPanel = () => {
     }
   };
 
+  const previewBulkSMS = async () => {
+    try {
+      await axios.get(API_BASE_URL + "/sms/preview");
+      setSuccess("preview fetched successfully!");
+    } catch (err) {
+      setError(err.response?.data?.error || "preview failed");
+    }
+  };
+
   // Test SMS handler
   const sendTestSMS = async () => {
     try {
@@ -169,13 +178,13 @@ export const SMSPanel = () => {
               <thead className="bg-gray-50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Student Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Student ID
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Punch Time
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Verify Type
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
@@ -235,16 +244,30 @@ export const SMSPanel = () => {
           <Button
             color="green"
             onClick={sendBulkSMS}
-            disabled={
-              transactions.length === 0 ||
-              transactions.every((t) => t.processed)
-            }
+            // disabled={
+            //   transactions.length === 0 ||
+            //   transactions.every((t) => t.processed)
+            // }
           >
-            Send Bulk SMS ({transactions.filter((t) => !t.processed).length}{" "}
-            pending)
+            Send Bulk SMS
+            {/* ({transactions.filter((t) => !t.processed).length}{" "}
+            pending) */}
           </Button>
         </div>
-
+        <div className="mt-6 flex justify-end">
+          <Button
+            color="green"
+            onClick={previewBulkSMS}
+            // disabled={
+            //   transactions.length === 0 ||
+            //   transactions.every((t) => t.processed)
+            // }
+          >
+            Preview Bulk SMS
+            {/* ({transactions.filter((t) => !t.processed).length}{" "}
+            pending) */}
+          </Button>
+        </div>
         {/* Test SMS Panel */}
         <Card className="mt-8 p-6 shadow-md">
           <Typography variant="h5" color="blue-gray" className="mb-4">
