@@ -84,3 +84,8 @@ export const renames = {
   classId_name: "Class",
   section_name: "Section",
 };
+
+export const API_BASE_URL =
+  import.meta.env.VITE_NODE_ENV === "development"
+    ? import.meta.env.VITE_NODE_ENV_DEVELOPMENT
+    : import.meta.env.VITE_NODE_ENV_PRODUCTION;

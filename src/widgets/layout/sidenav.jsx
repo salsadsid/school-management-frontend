@@ -73,7 +73,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
         <List>
           {filteredRoutes
             .filter(({ layout }) => layout !== "auth")
-            .map(({ layout, title, pages, isAccordion }, key) => (
+            .map(({ layout, title, pages, isAccordion, icon }, key) => (
               <div key={key}>
                 {isAccordion ? (
                   <Accordion
@@ -91,7 +91,11 @@ export function Sidenav({ brandImg, brandName, routes }) {
                         }`}
                       >
                         <ListItemPrefix>
-                          <PresentationChartBarIcon className="h-5 w-5" />
+                          {icon ? (
+                            icon
+                          ) : (
+                            <PresentationChartBarIcon className="h-5 w-5" />
+                          )}
                         </ListItemPrefix>
                         <Typography
                           color="blue-gray"

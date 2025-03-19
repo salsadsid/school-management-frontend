@@ -1,31 +1,11 @@
-import { useEffect } from "react";
-import { useDispatch } from "react-redux";
 import {
   changeSystem,
   homeHeroDetails,
   homeHeroImage,
 } from "../../configs/systemConfiguration";
-import { setBiotimeToken } from "../../redux/slices/biotimeSlice";
 changeSystem(false);
 const homeHeroDetailsData = homeHeroDetails("H. A. K. ACADEMY");
 export function Home() {
-  const dispatch = useDispatch();
-  useEffect(() => {
-    fetch("http://173.249.28.63/jwt-api-token-auth/", {
-      // mode: "no-cors",
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json", // Make sure this matches the data you're sending
-      },
-      body: JSON.stringify({
-        username: "admin",
-        password: "salsadsid1212",
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => dispatch(setBiotimeToken({ token: data.token })))
-      .catch((error) => console.error("Error:", error));
-  }, []);
   return (
     <div className="container mx-auto grid w-full grid-cols-1 items-center lg:grid-cols-2">
       <div className="row-start-2 lg:row-auto">
