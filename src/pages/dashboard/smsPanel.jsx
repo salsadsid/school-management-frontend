@@ -10,11 +10,7 @@ import {
 } from "@material-tailwind/react";
 import axios from "axios";
 import { useState } from "react";
-
-const API_BASE_URL =
-  import.meta.env.VITE_NODE_ENV === "development"
-    ? import.meta.env.VITE_NODE_ENV_DEVELOPMENT
-    : import.meta.env.VITE_NODE_ENV_PRODUCTION;
+import { API_BASE_URL } from "../../configs/constOptions";
 
 export const SMSPanel = () => {
   const [transactions, setTransactions] = useState([]);

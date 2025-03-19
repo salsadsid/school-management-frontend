@@ -10,17 +10,23 @@ import {
   NewClass,
   NewSection,
   NewStudent,
+  SMSNoticeSender,
   SMSPanel,
   Students,
   ViewAttendance,
 } from "@/pages/dashboard";
+import {
+  ClipboardDocumentCheckIcon,
+  UserGroupIcon,
+  UserIcon,
+} from "@heroicons/react/16/solid";
 import {
   HomeIcon,
   RectangleStackIcon,
   ServerStackIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
-
+import { MdSms } from "react-icons/md";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -50,6 +56,7 @@ export const routes = [
     layout: "dashboard",
     title: "Teacher Management",
     isAccordion: true,
+    icon: <UserIcon {...icon} />,
     pages: [
       {
         icon: <UserCircleIcon {...icon} />,
@@ -71,6 +78,7 @@ export const routes = [
     layout: "dashboard",
     title: "Class Management",
     isAccordion: true,
+    icon: <ClipboardDocumentCheckIcon {...icon} />,
     pages: [
       {
         icon: <HomeIcon {...icon} />,
@@ -100,6 +108,7 @@ export const routes = [
     layout: "dashboard",
     title: "Students Management",
     isAccordion: true,
+    icon: <UserGroupIcon {...icon} />,
     pages: [
       {
         icon: <UserCircleIcon {...icon} />,
@@ -119,6 +128,21 @@ export const routes = [
   },
   {
     layout: "dashboard",
+    title: "SMS Management",
+    isAccordion: true,
+    icon: <MdSms {...icon} />,
+    pages: [
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "SMS Notice Sender",
+        path: "/sms-notice-sender",
+        element: <SMSNoticeSender />,
+        roles: ["admin", "moderator"],
+      },
+    ],
+  },
+  {
+    layout: "dashboard",
     title: "Admission Management",
     isAccordion: true,
     pages: [
@@ -127,7 +151,7 @@ export const routes = [
         name: "All Applications",
         path: "/applications",
         element: <AdmissionSubmission />,
-        roles: ["admin", "moderator"],
+        roles: ["admin"],
       },
     ],
   },
@@ -142,14 +166,14 @@ export const routes = [
         name: "Attendance",
         path: "/attendance",
         element: <Attendance />,
-        roles: ["admin", "moderator"],
+        roles: ["admin"],
       },
       {
         icon: <UserCircleIcon {...icon} />,
         name: "View Attendance",
         path: "/view-attendance",
         element: <ViewAttendance />,
-        roles: ["admin", "moderator"],
+        roles: ["admin"],
       },
       {
         icon: <UserCircleIcon {...icon} />,
