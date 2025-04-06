@@ -12,7 +12,7 @@ import { admissionTypes, branches, classes } from "../../configs/constOptions";
 
 Font.register({
   family: "Ador",
-  src: "sagarnormal.ttf",
+  src: "/fonts/sagarnormal.ttf",
 });
 
 const styles = StyleSheet.create({

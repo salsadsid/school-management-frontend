@@ -2,6 +2,7 @@ import { SignIn, SignUp } from "@/pages/auth";
 import {
   AddTeacher,
   AdmissionSubmission,
+  AdmitCardDownload,
   AllTeachers,
   Attendance,
   Classes,
@@ -26,6 +27,7 @@ import {
   ServerStackIcon,
   UserCircleIcon,
 } from "@heroicons/react/24/solid";
+import { BiCard } from "react-icons/bi";
 import { MdSms } from "react-icons/md";
 const icon = {
   className: "w-5 h-5 text-inherit",
@@ -137,6 +139,21 @@ export const routes = [
         name: "SMS Notice Sender",
         path: "/sms-notice-sender",
         element: <SMSNoticeSender />,
+        roles: ["admin", "moderator"],
+      },
+    ],
+  },
+  {
+    layout: "dashboard",
+    title: "Admit Card Management",
+    isAccordion: true,
+    icon: <MdSms {...icon} />,
+    pages: [
+      {
+        icon: <BiCard {...icon} />,
+        name: "Admit Card Download",
+        path: "/admit-card",
+        element: <AdmitCardDownload />,
         roles: ["admin", "moderator"],
       },
     ],

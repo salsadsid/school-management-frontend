@@ -1,5 +1,6 @@
 export * from "@/pages/dashboard/addTeacher";
 export * from "@/pages/dashboard/admissionSubmission";
+export * from "@/pages/dashboard/admitCardDownload";
 export * from "@/pages/dashboard/allStudents";
 export * from "@/pages/dashboard/allTeachers";
 export * from "@/pages/dashboard/attendance";
