@@ -27,6 +27,7 @@ const TeacherModal = ({ row }) => {
         size="sm"
         variant="outlined"
         color="red"
+        disabled
       >
         Delete
       </Button>
