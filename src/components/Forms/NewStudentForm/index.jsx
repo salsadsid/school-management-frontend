@@ -27,7 +27,7 @@ const NewStudentForm = ({ classes, sections }) => {
   const fileInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
   const [imageFile, setImageFile] = useState(null);
-
+  const [imageError, setImageError] = useState(null);
   const { data: studentData, isLoading: isStudentLoading } = useGetStudentQuery(
     { id: studentId },
     { skip: !studentId }
@@ -65,6 +65,24 @@ const NewStudentForm = ({ classes, sections }) => {
     const file = e.target.files[0];
     if (!file) return;
 
+    setImageError(null); // Reset previous errors
+
+    // Validate file type
+    const allowedTypes = ["image/jpeg", "image/png"];
+    if (!allowedTypes.includes(file.type)) {
+      setImageError("Image must be in JPG or PNG format");
+      removeImage();
+      return;
+    }
+
+    // Validate file size (300KB = 307200 bytes)
+    if (file.size > 307200) {
+      setImageError("Image size must be less than 300 KB");
+      removeImage();
+      return;
+    }
+
+    // Proceed with valid file
     const reader = new FileReader();
     reader.onloadend = () => {
       setImagePreview(reader.result);
@@ -183,6 +201,7 @@ const NewStudentForm = ({ classes, sections }) => {
           {errors?.image && (
             <FormValidationError errorMessage={errors.image.message} />
           )}
+          {imageError && <FormValidationError errorMessage={imageError} />}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
