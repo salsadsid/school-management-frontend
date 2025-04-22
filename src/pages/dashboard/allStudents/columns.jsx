@@ -27,6 +27,24 @@ export const studentColumns = [
     ),
   },
   {
+    accessorKey: "imageCloudinary",
+    header: "Image",
+    cell: ({ row }) => (
+      <img
+        src={
+          row.original.imageCloudinary
+            ? row.original.imageCloudinary
+            : row.original.imageLocal
+            ? row.original.imageLocal
+            : ""
+        }
+        alt="Student Profile Image"
+        className="w-10 h-10 rounded-full"
+      />
+    ),
+    enableSorting: false,
+  },
+  {
     accessorKey: "classId.name",
     header: ({ column }) => (
       <button
