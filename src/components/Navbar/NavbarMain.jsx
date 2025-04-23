@@ -103,7 +103,7 @@ export function NavbarMain() {
                   variant="circular"
                   alt="user avatar"
                   className="cursor-pointer border-2 border-amber-400 hover:border-amber-300"
-                  src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+                  src="/assets/school_avator.png"
                 />
               </MenuHandler>
               <MenuList className="bg-blue-900/90 backdrop-blur-sm border border-blue-800/50">

@@ -57,7 +57,7 @@ const MainHeroSection = () => {
             autoplay={true}
             autoplayDelay={5000}
             loop={true}
-            transition={{ duration: 1 }}
+            transition={{ duration: 2 }}
             className="rounded-xl aspect-video"
             navigation={({ setActiveIndex, activeIndex, length }) => (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
