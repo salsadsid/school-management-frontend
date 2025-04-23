@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useRef, useState } from "react";
 import { Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../../configs/constOptions";
 import useManageQueryParams from "../../../hooks/useManageQueryParams";
 import {
   useCreateStudentMutation,
@@ -56,11 +57,14 @@ const NewStudentForm = ({ classes, sections }) => {
       });
       // Set initial image preview
       if (studentData.imageCloudinary || studentData.imageLocal) {
-        setImagePreview(studentData.imageCloudinary || studentData.imageLocal);
+        setImagePreview(
+          studentData.imageCloudinary ||
+            API_BASE_URL + "/" + studentData.imageLocal
+        );
       }
     }
   }, [studentData, reset, isEditMode]);
-
+  console.log(imagePreview);
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (!file) return;

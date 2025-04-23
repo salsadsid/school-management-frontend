@@ -38,7 +38,9 @@ export const Students = () => {
         )}
       </div>
       <RenderData data={students} apiState={studentsApiState}>
-        <DataTable columns={studentColumns} data={students} />
+        {students?.length > 0 && (
+          <DataTable columns={studentColumns} data={students} />
+        )}
       </RenderData>
     </div>
   );
