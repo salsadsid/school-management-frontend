@@ -16,12 +16,12 @@ export const homeHeroImage = {
 export const homeHeroDetails = (schoolName) => {
   if (isSystem) {
     return {
-      title: `Welcome to our <br/> School Management system`,
+      title: `Welcome to our School Management system`,
       description: "Manage your school easily",
     };
   } else {
     return {
-      title: `Welcome to <br/>${schoolName}`,
+      title: `${schoolName}`,
       description: `Excellence in education for a brighter future`,
     };
   }
