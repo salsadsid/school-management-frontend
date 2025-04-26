@@ -6,11 +6,17 @@ import {
   homeHeroDetails,
   isSystem,
 } from "../../../configs/systemConfiguration";
+import { cn } from "../../../utils/cn";
 changeSystem(false);
 const homeHeroDetailsData = homeHeroDetails("H. A. K. ACADEMY");
-const MainHeroSection = () => {
+const MainHeroSection = ({ className, hideButton }) => {
   return (
-    <div className="relative min-h-screen flex items-center bg-gradient-to-r from-blue-900/95 to-indigo-900/95">
+    <div
+      className={cn(
+        "relative min-h-screen flex items-center bg-gradient-to-r from-blue-900/95 to-indigo-900/95",
+        className
+      )}
+    >
       <div className="container mx-auto px-4 py-10 lg:py-16 grid lg:grid-cols-2 gap-12 items-center">
         <div className="absolute inset-0 bg-[url('/assets/school_pattern.avif')] opacity-10 mix-blend-soft-light" />
         {/* Text Content */}
@@ -27,7 +33,7 @@ const MainHeroSection = () => {
             {homeHeroDetailsData.description}
           </p>
 
-          {!isSystem && (
+          {!isSystem && !hideButton && (
             <Link
               to="/auth/sign-in"
               className="inline-block group transition-transform hover:scale-105"

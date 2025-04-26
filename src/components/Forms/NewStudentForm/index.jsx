@@ -86,15 +86,32 @@ const NewStudentForm = ({ classes, sections }) => {
       return;
     }
 
-    // Proceed with valid file
+    // Validate image dimensions
     const reader = new FileReader();
     reader.onloadend = () => {
-      setImagePreview(reader.result);
-      setImageFile(file);
+      const image = new Image();
+      image.src = reader.result;
+
+      image.onload = () => {
+        if (image.naturalWidth !== 250 || image.naturalHeight !== 300) {
+          setImageError("Image must be exactly 250x300 pixels");
+          removeImage();
+          return;
+        }
+
+        // All validations passed
+        setImagePreview(reader.result);
+        setImageFile(file);
+      };
+
+      image.onerror = () => {
+        setImageError("Failed to load image");
+        removeImage();
+      };
     };
+
     reader.readAsDataURL(file);
   };
-
   const removeImage = () => {
     setImagePreview(null);
     setImageFile(null);
