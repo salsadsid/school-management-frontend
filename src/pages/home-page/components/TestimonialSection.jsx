@@ -39,14 +39,14 @@ const testimonials = [
   {
     title:
       "The school has provided an excellent environment for my child's growth and learning. The teachers are very supportive.",
-    client: "John Doe",
+    client: "Rasel Ahmed",
     clientInfo: "Parent of Class 4 Student",
     img: "/image/parent1.jpg",
   },
   {
     title:
       "I am very impressed with the facilities and the quality of education provided. My child loves going to school every day.",
-    client: "Jane Smith",
+    client: "Rofikul Islam",
     clientInfo: "Parent of Class 3 Student",
     img: "/image/parent2.jpg",
   },
@@ -93,7 +93,7 @@ export function TestimonialSection() {
           <CardBody className="items-center mx-auto py-2">
             <Avatar src="https://via.placeholder.com/100" className="mb-4" />
             <Typography variant="h6" color="blue-gray">
-              Emily Johnson
+              Anik Ahmed
             </Typography>
             <Typography
               variant="paragraph"
