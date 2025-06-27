@@ -5,14 +5,13 @@ import {
   IconButton,
   Typography,
 } from "@material-tailwind/react";
-import React from "react";
 
 function TeacherCard({ img, name, title }) {
   return (
     <Card className="rounded-lg bg-gray-100" shadow={false}>
       <CardBody className="text-center">
         <Avatar
-          src={img}
+          src="assets/avator.png"
           alt={name}
           variant="circular"
           size="xxl"
@@ -49,43 +48,35 @@ function TeacherCard({ img, name, title }) {
 
 const teachers = [
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "Ryan Samuel",
+    name: "Selina Parvin",
     title: "Mathematics Teacher",
   },
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "Jessica Devis",
+    name: "Sonali Biswas",
     title: "Science Teacher",
   },
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "Nora Hazel",
+    name: "MST. FARHANA BEGUM",
     title: "English Teacher",
   },
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "Otto Gonzalez",
+    name: "Golum Rabbani",
     title: "History Teacher",
   },
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "Emma Roberts",
+    name: "Ahasanul Haque Khan",
     title: "Art Teacher",
   },
   {
-    img: `https://www.material-tailwind.com/image/avatar7.svg`,
-    name: "William Pearce",
+    name: "JANNATUL HASAN",
     title: "Physical Education Teacher",
   },
   {
-    img: "https://www.material-tailwind.com/image/avatar7.svg",
-    name: "Bruce Mars",
+    name: "Shapnat Rani",
     title: "Music Teacher",
   },
   {
-    img: "https://www.material-tailwind.com/image/avatar7.svg",
-    name: "Annie Sprrat",
+    name: "Monika Rani Pondit",
     title: "Geography Teacher",
   },
 ];
